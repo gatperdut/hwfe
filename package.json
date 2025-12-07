@@ -20,9 +20,17 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@angular-eslint/builder": "21.0.1",
+    "@angular-eslint/eslint-plugin": "21.0.1",
+    "@angular-eslint/eslint-plugin-template": "21.0.1",
+    "@angular-eslint/schematics": "21.0.1",
+    "@angular-eslint/template-parser": "21.0.1",
     "@angular/build": "^21.0.2",
     "@angular/cli": "^21.0.2",
     "@angular/compiler-cli": "^21.0.0",
+    "@typescript-eslint/eslint-plugin": "7.11.0",
+    "@typescript-eslint/parser": "7.11.0",
+    "eslint": "8.57.1",
     "prettier": "^3.7.4",
     "typescript": "~5.9.2"
   }

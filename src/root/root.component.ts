@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
 
 @Component({
-  selector: 'hwfe',
+  selector: 'hwfe-root',
   imports: [],
-  templateUrl: './hwfe.component.html',
+  templateUrl: './root.component.html',
   styles: [],
 })
-export class Hwfe {
+export class Root {
   protected readonly title = signal('hwfe');
 }

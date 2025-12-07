@@ -5,8 +5,8 @@
     "hwfe": {
       "projectType": "application",
       "root": "",
-      "sourceRoot": "src",
       "prefix": "hwfe",
+      "sourceRoot": "src",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
