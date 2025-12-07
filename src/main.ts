@@ -1,6 +1,5 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { App } from './app/app';
+import { Hwfe } from './hwfe/hwfe.component';
+import { hwfeConfig } from './hwfe/hwfe.config';
 
-bootstrapApplication(App, appConfig)
-  .catch((err) => console.error(err));
+bootstrapApplication(Hwfe, hwfeConfig).catch((err) => console.error(err));
