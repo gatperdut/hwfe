@@ -1,4 +1,6 @@
-# Hot Wizards Front End
+# HWFE
+
+Hot Wizards Front End
 
 ## Setup
 
