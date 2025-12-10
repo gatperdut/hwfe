@@ -5,12 +5,11 @@
   "license": "MIT",
   "version": "0.0.0",
   "scripts": {
-    "dev": "ng serve",
-    "dev:dist": "ng serve --configuration distribution",
-    "build": "ng build"
+    "build": "ng build",
+    "start:dev": "ng serve",
+    "start:dist:": "ng serve --configuration distribution"
   },
   "private": true,
-  "packageManager": "npm@11.6.4",
   "dependencies": {
     "@angular/common": "^21.0.0",
     "@angular/compiler": "^21.0.0",
@@ -25,12 +24,12 @@
     "@angular-eslint/eslint-plugin-template": "21.0.1",
     "@angular-eslint/schematics": "21.0.1",
     "@angular-eslint/template-parser": "21.0.1",
-    "@angular/build": "^21.0.2",
     "@angular/cli": "^21.0.2",
     "@angular/compiler-cli": "^21.0.0",
     "@typescript-eslint/eslint-plugin": "7.11.0",
     "@typescript-eslint/parser": "7.11.0",
     "eslint": "8.57.1",
+    "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.7.4",
     "typescript": "~5.9.2"
   }
