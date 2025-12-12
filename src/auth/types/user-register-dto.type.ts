@@ -1,5 +1,5 @@
 import { User } from './user.type';
 
-export type UserRegister = User & {
+export type UserRegisterDto = User & {
   password: string;
 };

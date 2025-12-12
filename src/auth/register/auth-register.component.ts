@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TypedForm } from '../../types/typed-form.type';
-import { UserRegister } from '../types/user-register.type';
+import { AuthService } from '../services/auth.service';
+import { UserRegisterDto } from '../types/user-register-dto.type';
 
 @Component({
   selector: 'hwfe-auth-register',
@@ -14,14 +15,26 @@ import { UserRegister } from '../types/user-register.type';
 })
 export class AuthRegisterComponent {
   private formBuilder: FormBuilder = inject(FormBuilder);
+  private authService: AuthService = inject(AuthService);
 
-  public formGroup: FormGroup<TypedForm<UserRegister>> = this.formBuilder.group({
-    displayName: ['', Validators.required],
-    email: ['', Validators.required],
-    password: ['', Validators.required],
+  public formGroup: FormGroup<TypedForm<UserRegisterDto>> = this.formBuilder.group({
+    displayName: this.formBuilder.control('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+    email: this.formBuilder.control('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+    password: this.formBuilder.control('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
   });
 
   public register(): void {
-    // TODO
+    this.authService.register(this.formGroup.getRawValue()).subscribe((result): void => {
+      console.log(result);
+    });
   }
 }
