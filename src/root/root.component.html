@@ -1,3 +1,5 @@
-<h1>environtment.apiUrl: {{ environment.apiUrl }}!</h1>
-
-<hwfe-auth-register></hwfe-auth-register>
+@if (loading()) {
+  <mat-spinner></mat-spinner>
+} @else {
+  <router-outlet></router-outlet>
+}

@@ -1,28 +1,28 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
+import { tap } from 'rxjs';
+import { NavService } from '../../services/nav.service';
 import { TypedForm } from '../../types/typed-form.type';
 import { AuthService } from '../services/auth.service';
-import { UserRegisterDto } from './types/user-register-dto.type';
+import { UserLoginDto } from './types/user-login-dto.type';
+
 @Component({
-  selector: 'hwfe-auth-register',
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, RouterModule, MatButtonModule],
-  templateUrl: './auth-register.component.html',
+  selector: 'hwfe-auth-login',
+  imports: [ReactiveFormsModule, MatFormField, MatInputModule, RouterModule, MatButtonModule],
+  templateUrl: './auth-login.component.html',
   styles: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AuthRegisterComponent {
+export class AuthLoginComponent {
   private formBuilder: FormBuilder = inject(FormBuilder);
   private authService: AuthService = inject(AuthService);
+  private navService: NavService = inject(NavService);
 
-  public formGroup: FormGroup<TypedForm<UserRegisterDto>> = this.formBuilder.group({
-    displayName: this.formBuilder.control('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
+  public formGroup: FormGroup<TypedForm<UserLoginDto>> = this.formBuilder.group({
     email: this.formBuilder.control('', {
       nonNullable: true,
       validators: [Validators.required],
@@ -33,9 +33,14 @@ export class AuthRegisterComponent {
     }),
   });
 
-  public register(): void {
-    this.authService.register(this.formGroup.getRawValue()).subscribe((result): void => {
-      console.log(result);
-    });
+  public login(): void {
+    this.authService
+      .login(this.formGroup.getRawValue())
+      .pipe(
+        tap((): void => {
+          this.navService.dashMain();
+        })
+      )
+      .subscribe();
   }
 }
