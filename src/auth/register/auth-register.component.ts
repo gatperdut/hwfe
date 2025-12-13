@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { TypedForm } from '../../types/typed-form.type';
@@ -16,6 +17,7 @@ import { passwordMatchValidator } from './validators/password-match.validator';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatIconModule,
     RouterModule,
     MatButtonModule,
   ],
@@ -48,6 +50,18 @@ export class AuthRegisterComponent {
     },
     { validators: passwordMatchValidator }
   );
+
+  public passwordHidden: WritableSignal<boolean> = signal<boolean>(true);
+
+  public passwordConfirmationHidden: WritableSignal<boolean> = signal<boolean>(true);
+
+  public passwordHiddenToggle(): void {
+    this.passwordHidden.set(!this.passwordHidden());
+  }
+
+  public passwordConfirmationHiddenToggle(): void {
+    this.passwordConfirmationHidden.set(!this.passwordConfirmationHidden());
+  }
 
   public register(): void {
     this.authService.register(this.formGroup.getRawValue()).subscribe((result): void => {

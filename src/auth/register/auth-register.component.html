@@ -21,7 +21,14 @@
     <mat-form-field>
       <mat-label>Password</mat-label>
 
-      <input matInput type="text" formControlName="password" />
+      <input matInput [type]="passwordHidden() ? 'password' : 'text'" formControlName="password" />
+
+      <mat-icon
+        [color]="null"
+        matSuffix
+        (click)="$event.stopPropagation(); passwordHiddenToggle()"
+        >{{ passwordHidden() ? 'visibility_off' : 'visibility' }}</mat-icon
+      >
 
       @if (formGroup.controls.password.errors?.['minlength']) {
         <mat-error>Minimum length 6 characters</mat-error>
@@ -33,7 +40,18 @@
     <mat-form-field>
       <mat-label>Password confirmation</mat-label>
 
-      <input matInput type="text" formControlName="passwordConfirmation" />
+      <input
+        matInput
+        [type]="passwordConfirmationHidden() ? 'password' : 'text'"
+        formControlName="passwordConfirmation"
+      />
+
+      <mat-icon
+        [color]="null"
+        matSuffix
+        (click)="$event.stopPropagation(); passwordConfirmationHiddenToggle()"
+        >{{ passwordConfirmationHidden() ? 'visibility_off' : 'visibility' }}</mat-icon
+      >
 
       @if (formGroup.controls.passwordConfirmation.errors?.['passwordMismatch']) {
         <mat-error>Password mismatch</mat-error>
