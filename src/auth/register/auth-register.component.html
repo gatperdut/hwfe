@@ -22,11 +22,29 @@
       <mat-label>Password</mat-label>
 
       <input matInput type="text" formControlName="password" />
+
+      @if (formGroup.controls.password.errors?.['minlength']) {
+        <mat-error>Minimum length 6 characters</mat-error>
+      }
     </mat-form-field>
   </div>
 
   <div>
-    <button type="button" mat-flat-button (click)="register()">Register</button>
+    <mat-form-field>
+      <mat-label>Password confirmation</mat-label>
+
+      <input matInput type="text" formControlName="passwordConfirmation" />
+
+      @if (formGroup.controls.passwordConfirmation.errors?.['passwordMismatch']) {
+        <mat-error>Password mismatch</mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <div>
+    <button type="button" mat-flat-button (click)="register()" [disabled]="formGroup.invalid">
+      Register
+    </button>
   </div>
 </div>
 

@@ -4,4 +4,6 @@ export type UserRegisterDto = {
   displayName: string;
 
   password: string;
+
+  passwordConfirmation: string;
 };

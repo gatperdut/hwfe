@@ -18,7 +18,9 @@
   </div>
 
   <div>
-    <button type="button" mat-flat-button (click)="login()">Login</button>
+    <button type="button" mat-flat-button (click)="login()" [disabled]="formGroup.invalid">
+      Login
+    </button>
   </div>
 </div>
 

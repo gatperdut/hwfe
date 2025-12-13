@@ -25,11 +25,11 @@ export class AuthLoginComponent {
   public formGroup: FormGroup<TypedForm<UserLoginDto>> = this.formBuilder.group({
     email: this.formBuilder.control('', {
       nonNullable: true,
-      validators: [Validators.required],
+      validators: [Validators.required, Validators.email],
     }),
     password: this.formBuilder.control('', {
       nonNullable: true,
-      validators: [Validators.required],
+      validators: [Validators.required, Validators.minLength(6)],
     }),
   });
 

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable, of, tap } from 'rxjs';
+import { HotToastService } from '@ngxpert/hot-toast';
+import { catchError, EMPTY, Observable, of, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { UserLoginDto } from '../login/types/user-login-dto.type';
 import { UserRegisterDto } from '../register/types/user-register-dto.type';
@@ -11,6 +12,7 @@ import { AuthTokenService } from './auth-token.service';
 export class AuthService {
   private httpClient: HttpClient = inject(HttpClient);
   private authTokenService: AuthTokenService = inject(AuthTokenService);
+  private hotToastService: HotToastService = inject(HotToastService);
 
   public register(userRegisterDto: UserRegisterDto): Observable<AuthToken> {
     return this.httpClient
@@ -24,6 +26,10 @@ export class AuthService {
 
   public login(userLoginDto: UserLoginDto): Observable<AuthToken> {
     return this.httpClient.post<AuthToken>(`${environment.apiUrl}/auth/login`, userLoginDto).pipe(
+      catchError((): Observable<never> => {
+        this.hotToastService.error('Invalid credentials');
+        return EMPTY;
+      }),
       tap((authToken: AuthToken): void => {
         this.authTokenService.set(authToken.token);
       })

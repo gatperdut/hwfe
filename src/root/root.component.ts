@@ -47,6 +47,7 @@ export class RootComponent implements OnInit {
 
             this.loading.set(false);
 
+            // TODO when reloading in register, still brings us to login. Annoying.
             this.navService.authLogin();
 
             return EMPTY;
