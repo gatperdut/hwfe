@@ -4,10 +4,10 @@
 // Learn more about theming and how to use it for your application's
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
+@use 'styles/spinner';
+@use 'styles/spacing' as spacing;
 
-/* Importing @ngxpert/hot-toast SCSS file. */
-// TODO possibly drop hot-toast. use boxes instead
-@use '@ngxpert/hot-toast/styles';
+@include spacing.get-styles(30, 1);
 
 html {
   @include mat.theme(
