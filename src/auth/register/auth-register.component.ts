@@ -147,7 +147,7 @@ export class AuthRegisterComponent {
       .register(this.formGroup.getRawValue())
       .pipe(
         tap((): void => {
-          this.navService.dashMain();
+          this.navService.toDashboard();
         })
       )
       .subscribe((result): void => {

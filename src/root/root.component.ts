@@ -33,22 +33,21 @@ export class RootComponent implements OnInit {
       .loginAuto()
       .pipe(
         catchError((): Observable<never> => {
-          console.log('Autologin error.');
-
           this.loading.set(false);
 
-          this.navService.authLogin();
+          this.navService.toAuthLogin();
 
           return EMPTY;
         }),
         switchMap((valid: boolean): Observable<User | never> => {
           if (!valid) {
-            console.log('Autologin failed');
-
             this.loading.set(false);
 
-            // TODO when reloading in register, still brings us to login. Annoying.
-            this.navService.authLogin();
+            setTimeout((): void => {
+              if (!this.navService.isAuthRegister() && !this.navService.isAuthLogin()) {
+                this.navService.toAuthLogin();
+              }
+            });
 
             return EMPTY;
           }
@@ -58,7 +57,7 @@ export class RootComponent implements OnInit {
         tap((): void => {
           this.loading.set(false);
 
-          this.navService.dashMain();
+          this.navService.toDashboard();
         })
       )
       .subscribe();

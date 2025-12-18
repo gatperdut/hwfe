@@ -38,7 +38,7 @@ export class AuthLoginComponent {
       .login(this.formGroup.getRawValue())
       .pipe(
         tap((): void => {
-          this.navService.dashMain();
+          this.navService.toDashboard();
         })
       )
       .subscribe();

@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { AuthLoginComponent } from './auth/login/auth-login.component';
 import { AuthRegisterComponent } from './auth/register/auth-register.component';
-import { DashMainComponent } from './dashboard/main/dash-main.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 export const routes: Routes = [
   {
@@ -14,7 +14,7 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    component: DashMainComponent,
+    component: DashboardComponent,
   },
   {
     path: '',

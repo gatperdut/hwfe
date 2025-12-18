@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'hwfe-dash-main',
+  selector: 'hwfe-dashboard',
   imports: [],
-  templateUrl: './dash-main.component.html',
+  templateUrl: './dashboard.component.html',
   styles: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashMainComponent {
+export class DashboardComponent {
   public login(): void {}
 }

@@ -7,15 +7,27 @@ import { Router } from '@angular/router';
 export class NavService {
   private router: Router = inject(Router);
 
-  public authLogin(): Promise<boolean> {
+  public isAuthLogin(): boolean {
+    return this.router.url === '/login';
+  }
+
+  public toAuthLogin(): Promise<boolean> {
     return this.router.navigate(['/login']);
   }
 
-  public aughRegister(): Promise<boolean> {
+  public isAuthRegister(): boolean {
+    return this.router.url === '/register';
+  }
+
+  public toAughRegister(): Promise<boolean> {
     return this.router.navigate(['/register']);
   }
 
-  public dashMain(): Promise<boolean> {
+  public isDashboard(): boolean {
+    return this.router.url === '/dashboard';
+  }
+
+  public toDashboard(): Promise<boolean> {
     return this.router.navigate(['/dashboard']);
   }
 }

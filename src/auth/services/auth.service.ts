@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, EMPTY, Observable, of, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { UserLoginDto } from '../login/types/user-login-dto.type';
@@ -11,6 +12,7 @@ import { AuthTokenService } from './auth-token.service';
 export class AuthService {
   private httpClient: HttpClient = inject(HttpClient);
   private authTokenService: AuthTokenService = inject(AuthTokenService);
+  private matSnackBar: MatSnackBar = inject(MatSnackBar);
 
   public register(userRegisterDto: UserRegisterDto): Observable<AuthToken> {
     return this.httpClient
@@ -25,6 +27,8 @@ export class AuthService {
   public login(userLoginDto: UserLoginDto): Observable<AuthToken> {
     return this.httpClient.post<AuthToken>(`${environment.apiUrl}/auth/login`, userLoginDto).pipe(
       catchError((): Observable<never> => {
+        this.matSnackBar.open('Incorrect credentials');
+
         return EMPTY;
       }),
       tap((authToken: AuthToken): void => {
@@ -46,6 +50,17 @@ export class AuthService {
       return of(false);
     }
 
-    return this.verifyToken(token);
+    return this.verifyToken(token).pipe(
+      tap({
+        next: (valid: boolean): void => {
+          if (!valid) {
+            console.log('Autologin failed.');
+          }
+        },
+        error: (): void => {
+          console.log('Autologin error.');
+        },
+      })
+    );
   }
 }
