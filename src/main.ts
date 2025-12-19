@@ -1,7 +1,31 @@
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { Root } from './root/root.component';
-import { rootConfig } from './root/root.config';
+import { provideRouter, withEnabledBlockingInitialNavigation } from '@angular/router';
+import { AuthInterceptor } from './auth/auth.interceptor';
+import { RootComponent } from './root/root.component';
+import { routes } from './routes';
+import { AlwaysErrorStateMatcher } from './utils/forms/always.error-state-matcher';
 
-bootstrapApplication(Root, rootConfig).catch((err) => {
+const applicationConfig: ApplicationConfig = {
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideRouter(routes, withEnabledBlockingInitialNavigation()),
+    provideHttpClient(withInterceptorsFromDi()),
+    {
+      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+      useValue: {
+        duration: 3000,
+        panelClass: ['hwfe-snackbar'],
+      },
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: ErrorStateMatcher, useClass: AlwaysErrorStateMatcher },
+  ],
+};
+
+bootstrapApplication(RootComponent, applicationConfig).catch((err) => {
   console.error(err);
 });

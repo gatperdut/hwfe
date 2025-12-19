@@ -1,0 +1,100 @@
+<h1>Register</h1>
+
+<form [formGroup]="formGroup" (ngSubmit)="register()">
+  <div>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+
+      <input matInput type="text" formControlName="email" />
+
+      @if (availableEmailLoading()) {
+        <span class="hwfe-spinner mr-5" matSuffix></span>
+      }
+
+      @if (formGroup.controls.email.errors?.['email']) {
+        <mat-error>Email is invalid</mat-error>
+      }
+
+      @if (formGroup.controls.email.errors?.['unavailable']) {
+        <mat-error>Email already in use</mat-error>
+      } @else if (formGroup.controls.email.valid && formGroup.controls.email.dirty) {
+        <mat-hint>Email is not in use</mat-hint>
+      }
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <mat-label>Display name</mat-label>
+
+      <input matInput type="text" formControlName="displayName" />
+
+      @if (availableDisplayNameLoading()) {
+        <span class="hwfe-spinner mr-5" matSuffix></span>
+      }
+
+      @if (formGroup.controls.displayName.errors?.['unavailable']) {
+        <mat-error>Display name already in use</mat-error>
+      } @else if (formGroup.controls.displayName.valid && formGroup.controls.displayName.dirty) {
+        <mat-hint>Display name available</mat-hint>
+      }
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+
+      <input matInput [type]="passwordHidden() ? 'password' : 'text'" formControlName="password" />
+
+      <mat-icon [color]="null" matSuffix (click)="$event.stopPropagation(); passwordHiddenToggle()">
+        {{ passwordHidden() ? 'visibility_off' : 'visibility' }}
+      </mat-icon>
+
+      @if (formGroup.controls.password.valid) {
+        <mat-hint>Password is valid</mat-hint>
+      }
+
+      @if (formGroup.controls.password.errors?.['minlength']) {
+        <mat-error>Minimum length 6 characters</mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <mat-label>Password confirmation</mat-label>
+
+      <input
+        matInput
+        [type]="passwordConfirmationHidden() ? 'password' : 'text'"
+        formControlName="passwordConfirmation"
+      />
+
+      <mat-icon
+        [color]="null"
+        matSuffix
+        (click)="$event.stopPropagation(); passwordConfirmationHiddenToggle()"
+        >{{ passwordConfirmationHidden() ? 'visibility_off' : 'visibility' }}</mat-icon
+      >
+
+      @if (formGroup.controls.passwordConfirmation.valid) {
+        <mat-hint>Password matches</mat-hint>
+      }
+
+      @if (formGroup.controls.passwordConfirmation.errors?.['passwordMismatch']) {
+        <mat-error>Password mismatch</mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <button
+    type="submit"
+    mat-flat-button
+    [disabled]="formGroup.invalid || availableEmailLoading() || availableDisplayNameLoading()"
+  >
+    Register
+  </button>
+</form>
+
+<a routerLink="/login">Already have an account</a>

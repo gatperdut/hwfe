@@ -1,1 +1,5 @@
-<h1>Welcome to {{ title() }} on {{ environment.apiUrl }}!</h1>
+@if (loading()) {
+  <mat-spinner></mat-spinner>
+} @else {
+  <router-outlet></router-outlet>
+}
