@@ -11,6 +11,10 @@
         <span class="hwfe-spinner mr-5" matSuffix></span>
       }
 
+      @if (formGroup.controls.email.errors?.['email']) {
+        <mat-error>Email is invalid</mat-error>
+      }
+
       @if (formGroup.controls.email.errors?.['unavailable']) {
         <mat-error>Email already in use</mat-error>
       } @else if (formGroup.controls.email.valid && formGroup.controls.email.dirty) {
@@ -25,7 +29,7 @@
 
       <input matInput type="text" formControlName="displayName" />
 
-      @if (availableEmailLoading()) {
+      @if (availableDisplayNameLoading()) {
         <span class="hwfe-spinner mr-5" matSuffix></span>
       }
 
@@ -77,7 +81,12 @@
   </div>
 
   <div>
-    <button type="button" mat-flat-button (click)="register()" [disabled]="formGroup.invalid">
+    <button
+      type="button"
+      mat-flat-button
+      (click)="register()"
+      [disabled]="formGroup.invalid || availableEmailLoading() || availableDisplayNameLoading()"
+    >
       Register
     </button>
   </div>

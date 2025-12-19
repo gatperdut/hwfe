@@ -14,12 +14,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
-import { catchError, delay, map, Observable, of, switchMap, tap, timer } from 'rxjs';
+import { finalize, map, Observable, of, switchMap, tap, timer } from 'rxjs';
 import { NavService } from '../../services/nav.service';
 import { TypedForm } from '../../types/typed-form.type';
 import { UserApiService } from '../../user/services/user-api.service';
 import { AuthService } from '../services/auth.service';
 import { UserRegisterDto } from './types/user-register-dto.type';
+import { emailValidator } from './validators/email.validator';
 import { passwordMatchValidator } from './validators/password-match.validator';
 @Component({
   selector: 'hwfe-auth-register',
@@ -47,7 +48,7 @@ export class AuthRegisterComponent {
       email: this.formBuilder.control('', {
         nonNullable: true,
         asyncValidators: [this.availableEmailValidator()],
-        validators: [Validators.required, Validators.email],
+        validators: [Validators.required, emailValidator({ allow_display_name: false })],
       }),
       displayName: this.formBuilder.control('', {
         nonNullable: true,
@@ -78,23 +79,17 @@ export class AuthRegisterComponent {
         return of(null);
       }
 
+      this.availableEmailLoading.set(true);
+
       return timer(500).pipe(
-        tap((): void => {
-          this.availableEmailLoading.set(true);
-        }),
         switchMap((): Observable<boolean> => {
-          return this.userApiService.availableEmail(control.value).pipe(delay(1000));
-        }),
-        tap((): void => {
-          this.availableEmailLoading.set(false);
+          return this.userApiService.availableEmail(control.value);
         }),
         map((available: boolean): ValidationErrors | null => {
           return available ? null : { unavailable: true };
         }),
-        catchError((): Observable<null> => {
+        finalize((): void => {
           this.availableEmailLoading.set(false);
-
-          return of(null);
         })
       );
     };
@@ -103,28 +98,22 @@ export class AuthRegisterComponent {
   public availableDisplayNameValidator(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       if (!control.value) {
-        this.availableEmailLoading.set(false);
+        this.availableDisplayNameLoading.set(false);
 
         return of(null);
       }
 
+      this.availableDisplayNameLoading.set(true);
+
       return timer(500).pipe(
-        tap((): void => {
-          this.availableEmailLoading.set(true);
-        }),
         switchMap((): Observable<boolean> => {
           return this.userApiService.availableDisplayName(control.value);
-        }),
-        tap((): void => {
-          this.availableEmailLoading.set(false);
         }),
         map((available: boolean): ValidationErrors | null => {
           return available ? null : { unavailable: true };
         }),
-        catchError((): Observable<null> => {
-          this.availableEmailLoading.set(false);
-
-          return of(null);
+        finalize((): void => {
+          this.availableDisplayNameLoading.set(false);
         })
       );
     };
