@@ -8,22 +8,20 @@ import {
 } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule } from '@angular/router';
-import { catchError, EMPTY, Observable, switchMap, tap } from 'rxjs';
+import { finalize, tap } from 'rxjs';
 import { AuthService } from '../auth/services/auth.service';
 import { NavService } from '../services/nav.service';
-import { UserApiService } from '../user/services/user-api.service';
 import { User } from '../user/types/user.type';
 
 @Component({
   selector: 'hwfe-root',
   imports: [RouterModule, MatProgressSpinnerModule],
   templateUrl: './root.component.html',
-  styles: [],
+  styleUrls: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RootComponent implements OnInit {
   private authService: AuthService = inject(AuthService);
-  private userApiService: UserApiService = inject(UserApiService);
   private navService: NavService = inject(NavService);
 
   public loading: WritableSignal<boolean> = signal<boolean>(true);
@@ -32,32 +30,22 @@ export class RootComponent implements OnInit {
     this.authService
       .loginAuto()
       .pipe(
-        catchError((): Observable<never> => {
-          this.loading.set(false);
+        tap({
+          next: (user: User | null): void => {
+            if (!user) {
+              this.navService.toAuthLogin();
 
-          this.navService.toAuthLogin();
+              return;
+            }
 
-          return EMPTY;
+            this.navService.toDashboard();
+          },
+          error: (): void => {
+            this.navService.toAuthLogin();
+          },
         }),
-        switchMap((valid: boolean): Observable<User | never> => {
-          if (!valid) {
-            this.loading.set(false);
-
-            setTimeout((): void => {
-              if (!this.navService.isAuthRegister() && !this.navService.isAuthLogin()) {
-                this.navService.toAuthLogin();
-              }
-            });
-
-            return EMPTY;
-          }
-
-          return this.userApiService.me();
-        }),
-        tap((): void => {
+        finalize((): void => {
           this.loading.set(false);
-
-          this.navService.toDashboard();
         })
       )
       .subscribe();

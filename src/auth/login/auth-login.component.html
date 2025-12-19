@@ -1,4 +1,4 @@
-<div [formGroup]="formGroup">
+<form [formGroup]="formGroup" (ngSubmit)="login()">
   <h1>Login</h1>
 
   <div>
@@ -17,11 +17,7 @@
     </mat-form-field>
   </div>
 
-  <div>
-    <button type="button" mat-flat-button (click)="login()" [disabled]="formGroup.invalid">
-      Login
-    </button>
-  </div>
-</div>
+  <button type="submit" mat-flat-button [disabled]="formGroup.invalid">Login</button>
+</form>
 
 <a routerLink="/register">Create a new account</a>

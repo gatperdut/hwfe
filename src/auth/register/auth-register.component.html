@@ -1,6 +1,6 @@
 <h1>Register</h1>
 
-<div [formGroup]="formGroup">
+<form [formGroup]="formGroup" (ngSubmit)="register()">
   <div>
     <mat-form-field>
       <mat-label>Email</mat-label>
@@ -51,6 +51,10 @@
         {{ passwordHidden() ? 'visibility_off' : 'visibility' }}
       </mat-icon>
 
+      @if (formGroup.controls.password.valid) {
+        <mat-hint>Password is valid</mat-hint>
+      }
+
       @if (formGroup.controls.password.errors?.['minlength']) {
         <mat-error>Minimum length 6 characters</mat-error>
       }
@@ -74,22 +78,23 @@
         >{{ passwordConfirmationHidden() ? 'visibility_off' : 'visibility' }}</mat-icon
       >
 
+      @if (formGroup.controls.passwordConfirmation.valid) {
+        <mat-hint>Password matches</mat-hint>
+      }
+
       @if (formGroup.controls.passwordConfirmation.errors?.['passwordMismatch']) {
         <mat-error>Password mismatch</mat-error>
       }
     </mat-form-field>
   </div>
 
-  <div>
-    <button
-      type="button"
-      mat-flat-button
-      (click)="register()"
-      [disabled]="formGroup.invalid || availableEmailLoading() || availableDisplayNameLoading()"
-    >
-      Register
-    </button>
-  </div>
-</div>
+  <button
+    type="submit"
+    mat-flat-button
+    [disabled]="formGroup.invalid || availableEmailLoading() || availableDisplayNameLoading()"
+  >
+    Register
+  </button>
+</form>
 
 <a routerLink="/login">Already have an account</a>

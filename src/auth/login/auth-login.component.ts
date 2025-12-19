@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { tap } from 'rxjs';
 import { NavService } from '../../services/nav.service';
 import { TypedForm } from '../../types/typed-form.type';
+import { emailValidator } from '../register/validators/email.validator';
 import { AuthService } from '../services/auth.service';
 import { UserLoginDto } from './types/user-login-dto.type';
 
@@ -14,7 +15,7 @@ import { UserLoginDto } from './types/user-login-dto.type';
   selector: 'hwfe-auth-login',
   imports: [ReactiveFormsModule, MatFormField, MatInputModule, RouterModule, MatButtonModule],
   templateUrl: './auth-login.component.html',
-  styles: [],
+  styleUrls: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthLoginComponent {
@@ -25,7 +26,7 @@ export class AuthLoginComponent {
   public formGroup: FormGroup<TypedForm<UserLoginDto>> = this.formBuilder.group({
     email: this.formBuilder.control('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.email],
+      validators: [Validators.required, emailValidator({ allow_display_name: false })],
     }),
     password: this.formBuilder.control('', {
       nonNullable: true,
@@ -37,8 +38,10 @@ export class AuthLoginComponent {
     this.authService
       .login(this.formGroup.getRawValue())
       .pipe(
-        tap((): void => {
-          this.navService.toDashboard();
+        tap({
+          next: (): void => {
+            this.navService.toDashboard();
+          },
         })
       )
       .subscribe();

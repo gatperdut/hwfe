@@ -34,7 +34,7 @@ import { passwordMatchValidator } from './validators/password-match.validator';
     MatButtonModule,
   ],
   templateUrl: './auth-register.component.html',
-  styles: [],
+  styleUrls: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthRegisterComponent {
@@ -139,8 +139,6 @@ export class AuthRegisterComponent {
           this.navService.toDashboard();
         })
       )
-      .subscribe((result): void => {
-        console.log(result);
-      });
+      .subscribe();
   }
 }

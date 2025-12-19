@@ -1,1 +1,5 @@
 <h1>Dashboard</h1>
+
+<button type="button" mat-flat-button (click)="logout()">Logout</button>
+
+{{ authService.user() | json }}
