@@ -71,6 +71,10 @@ export class AuthRegisterComponent {
 
   public availableDisplayNameLoading: WritableSignal<boolean> = signal<boolean>(false);
 
+  public passwordHidden: WritableSignal<boolean> = signal<boolean>(true);
+
+  public passwordConfirmationHidden: WritableSignal<boolean> = signal<boolean>(true);
+
   public availableEmailValidator(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       if (!control.value) {
@@ -118,10 +122,6 @@ export class AuthRegisterComponent {
       );
     };
   }
-
-  public passwordHidden: WritableSignal<boolean> = signal<boolean>(true);
-
-  public passwordConfirmationHidden: WritableSignal<boolean> = signal<boolean>(true);
 
   public passwordHiddenToggle(): void {
     this.passwordHidden.set(!this.passwordHidden());

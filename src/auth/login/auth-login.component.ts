@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormField } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { tap } from 'rxjs';
@@ -13,7 +14,14 @@ import { UserLoginDto } from './types/user-login-dto.type';
 
 @Component({
   selector: 'hwfe-auth-login',
-  imports: [ReactiveFormsModule, MatFormField, MatInputModule, RouterModule, MatButtonModule],
+  imports: [
+    ReactiveFormsModule,
+    MatFormField,
+    MatInputModule,
+    RouterModule,
+    MatButtonModule,
+    MatIconModule,
+  ],
   templateUrl: './auth-login.component.html',
   styleUrls: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,6 +42,8 @@ export class AuthLoginComponent {
     }),
   });
 
+  public passwordHidden: WritableSignal<boolean> = signal<boolean>(true);
+
   public login(): void {
     this.authService
       .login(this.formGroup.getRawValue())
@@ -45,5 +55,9 @@ export class AuthLoginComponent {
         })
       )
       .subscribe();
+  }
+
+  public passwordHiddenToggle(): void {
+    this.passwordHidden.set(!this.passwordHidden());
   }
 }
