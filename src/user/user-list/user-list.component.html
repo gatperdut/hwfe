@@ -1,0 +1,32 @@
+<mat-paginator
+  [length]="paginationService.meta().total"
+  [pageSize]="paginationService.meta().pageSize"
+  [pageIndex]="paginationService.page()"
+  (page)="paginationService.page.set($event.pageIndex)"
+  [showFirstLastButtons]="true"
+/>
+
+<mat-table [dataSource]="(users$ | async) ?? []">
+  <ng-container matColumnDef="displayName">
+    <mat-header-cell *matHeaderCellDef>
+      <span>Display name</span>
+    </mat-header-cell>
+
+    <mat-cell *matCellDef="let user">
+      <span>{{ user.displayName }}</span>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="email">
+    <mat-header-cell *matHeaderCellDef>
+      <span>Email</span>
+    </mat-header-cell>
+
+    <mat-cell *matCellDef="let user">
+      <span>{{ user.email }}</span>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+  <mat-row *matRowDef="let user; columns: columns"></mat-row>
+</mat-table>

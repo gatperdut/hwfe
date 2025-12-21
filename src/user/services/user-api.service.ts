@@ -2,12 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { User } from '../types/user.type';
+import { Paginated } from '../../types/paginated.type';
 import { UserAvailability } from '../types/user-availability.type';
+import { User } from '../types/user.type';
 
 @Injectable({ providedIn: 'root' })
 export class UserApiService {
   private httpClient: HttpClient = inject(HttpClient);
+
+  public all(): Observable<Paginated<User>> {
+    return this.httpClient.get<Paginated<User>>(`${environment.apiUrl}/users`);
+  }
 
   public me(): Observable<User> {
     return this.httpClient.get<User>(`${environment.apiUrl}/users/me`);
