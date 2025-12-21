@@ -6,6 +6,7 @@
 @use '@angular/material' as mat;
 @use 'styles/spinner';
 @use 'styles/spacing' as spacing;
+@use 'styles/mat-paginator';
 
 @include spacing.get-styles(30, 1);
 

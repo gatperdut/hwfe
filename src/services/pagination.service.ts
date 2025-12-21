@@ -1,11 +1,20 @@
-import { Injectable, signal, WritableSignal } from '@angular/core';
-import { PaginatedMeta } from '../types/paginated.type';
+import { Injectable, signal } from '@angular/core';
+import { PaginatedMetaInternal } from '../types/paginated.type';
+import { Pagination } from '../types/pagination.type';
 
 @Injectable()
 export class PaginationService {
-  public page: WritableSignal<number> = signal<number>(0);
+  public meta: PaginatedMetaInternal = {
+    page: signal<number>(0),
+    pageSize: signal<number>(10),
+    total: signal<number>(0),
+    pages: signal<number>(0),
+  };
 
-  public pageSize: WritableSignal<number> = signal<number>(10);
-
-  public meta: WritableSignal<PaginatedMeta> = signal<PaginatedMeta>({} as PaginatedMeta);
+  public toPagination(): Pagination {
+    return {
+      page: this.meta.page(),
+      pageSize: this.meta.pageSize(),
+    };
+  }
 }

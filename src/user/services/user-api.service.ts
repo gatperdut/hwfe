@@ -3,15 +3,16 @@ import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Paginated } from '../../types/paginated.type';
-import { UserAvailability } from '../types/user-availability.type';
+import { UserAvailabilityDto } from '../types/user-availability.dto';
+import { UserSearchDto } from '../types/user-search.dto';
 import { User } from '../types/user.type';
 
 @Injectable({ providedIn: 'root' })
 export class UserApiService {
   private httpClient: HttpClient = inject(HttpClient);
 
-  public all(): Observable<Paginated<User>> {
-    return this.httpClient.get<Paginated<User>>(`${environment.apiUrl}/users`);
+  public search(search: UserSearchDto): Observable<Paginated<User>> {
+    return this.httpClient.get<Paginated<User>>(`${environment.apiUrl}/users`, { params: search });
   }
 
   public me(): Observable<User> {
@@ -20,21 +21,21 @@ export class UserApiService {
 
   public availableEmail(email: string): Observable<boolean> {
     return this.httpClient
-      .get<UserAvailability>(`${environment.apiUrl}/users/available-email`, {
+      .get<UserAvailabilityDto>(`${environment.apiUrl}/users/available-email`, {
         params: {
           email: email,
         },
       })
-      .pipe(map((availability: UserAvailability): boolean => availability.available));
+      .pipe(map((availability: UserAvailabilityDto): boolean => availability.available));
   }
 
   public availableDisplayName(displayName: string): Observable<boolean> {
     return this.httpClient
-      .get<UserAvailability>(`${environment.apiUrl}/users/available-display-name`, {
+      .get<UserAvailabilityDto>(`${environment.apiUrl}/users/available-display-name`, {
         params: {
           displayName: displayName,
         },
       })
-      .pipe(map((availability: UserAvailability): boolean => availability.available));
+      .pipe(map((availability: UserAvailabilityDto): boolean => availability.available));
   }
 }

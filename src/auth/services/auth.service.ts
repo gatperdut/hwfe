@@ -5,8 +5,8 @@ import { catchError, EMPTY, Observable, of, switchMap, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { UserApiService } from '../../user/services/user-api.service';
 import { User } from '../../user/types/user.type';
-import { UserLoginDto } from '../login/types/user-login-dto.type';
-import { UserRegisterDto } from '../register/types/user-register-dto.type';
+import { UserLoginDto } from '../login/types/user-login.dto';
+import { UserRegisterDto } from '../register/types/user-register.dto';
 import { AuthToken } from '../types/auth-token.type';
 import { AuthTokenService } from './auth-token.service';
 

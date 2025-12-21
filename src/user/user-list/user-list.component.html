@@ -1,9 +1,17 @@
+<form [formGroup]="formGroup">
+  <mat-form-field>
+    <mat-label>Search</mat-label>
+
+    <input matInput type="text" formControlName="term" />
+  </mat-form-field>
+</form>
+
 <mat-paginator
-  [length]="paginationService.meta().total"
-  [pageSize]="paginationService.meta().pageSize"
-  [pageIndex]="paginationService.page()"
-  (page)="paginationService.page.set($event.pageIndex)"
-  [showFirstLastButtons]="true"
+  [length]="paginationService.meta.total()"
+  [pageSize]="paginationService.meta.pageSize()"
+  [pageSizeOptions]="[]"
+  [pageIndex]="paginationService.meta.page()"
+  (page)="paginationService.meta.page.set($event.pageIndex)"
 />
 
 <mat-table [dataSource]="(users$ | async) ?? []">
@@ -12,8 +20,8 @@
       <span>Display name</span>
     </mat-header-cell>
 
-    <mat-cell *matCellDef="let user">
-      <span>{{ user.displayName }}</span>
+    <mat-cell *matCellDef="let user; dataSource: users$ | async">
+      <span>{{ user?.displayName }}</span>
     </mat-cell>
   </ng-container>
 
@@ -22,8 +30,18 @@
       <span>Email</span>
     </mat-header-cell>
 
-    <mat-cell *matCellDef="let user">
-      <span>{{ user.email }}</span>
+    <mat-cell *matCellDef="let user; dataSource: users$ | async">
+      <span>{{ user?.email }}</span>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="admin">
+    <mat-header-cell *matHeaderCellDef>
+      <span>Admin?</span>
+    </mat-header-cell>
+
+    <mat-cell *matCellDef="let user; dataSource: users$ | async">
+      <span>{{ user?.admin ? 'Yes' : 'No' }}</span>
     </mat-cell>
   </ng-container>
 

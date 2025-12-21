@@ -6,7 +6,7 @@ import {
   ValidatorFn,
 } from '@angular/forms';
 import { TypedForm } from '../../../types/typed-form.type';
-import { UserRegisterDto } from '../types/user-register-dto.type';
+import { UserRegisterDto } from '../types/user-register.dto';
 
 export const passwordMatchValidator: ValidatorFn = (
   abstractControl: AbstractControl

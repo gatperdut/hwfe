@@ -10,7 +10,7 @@ import { NavService } from '../../services/nav.service';
 import { TypedForm } from '../../types/typed-form.type';
 import { emailValidator } from '../register/validators/email.validator';
 import { AuthService } from '../services/auth.service';
-import { UserLoginDto } from './types/user-login-dto.type';
+import { UserLoginDto } from './types/user-login.dto';
 
 @Component({
   selector: 'hwfe-auth-login',

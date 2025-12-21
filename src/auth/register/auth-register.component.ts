@@ -19,7 +19,7 @@ import { NavService } from '../../services/nav.service';
 import { TypedForm } from '../../types/typed-form.type';
 import { UserApiService } from '../../user/services/user-api.service';
 import { AuthService } from '../services/auth.service';
-import { UserRegisterDto } from './types/user-register-dto.type';
+import { UserRegisterDto } from './types/user-register.dto';
 import { emailValidator } from './validators/email.validator';
 import { passwordMatchValidator } from './validators/password-match.validator';
 @Component({
