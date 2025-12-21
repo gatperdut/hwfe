@@ -26,7 +26,7 @@ export class RootComponent implements OnInit {
 
   public loading: WritableSignal<boolean> = signal<boolean>(true);
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.authService
       .loginAuto()
       .pipe(
