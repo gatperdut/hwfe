@@ -24,10 +24,22 @@ export class NavService {
   }
 
   public isDashboard(): boolean {
-    return this.router.url === '/dashboard';
+    return this.router.url.startsWith('/dashboard');
   }
 
-  public toDashboard(): Promise<boolean> {
-    return this.router.navigate(['/dashboard']);
+  public isDashboardUsers(): boolean {
+    return this.router.url === '/dashboard/users';
+  }
+
+  public toDashboardUsers(): Promise<boolean> {
+    return this.router.navigate(['/dashboard/users']);
+  }
+
+  public isDashboardCharacters(): boolean {
+    return this.router.url === '/dashboard/characters';
+  }
+
+  public toDashboardCharacters(): Promise<boolean> {
+    return this.router.navigate(['/dashboard/characters']);
   }
 }

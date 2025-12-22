@@ -1,14 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTabsModule } from '@angular/material/tabs';
+import { RouterModule } from '@angular/router';
 import { AuthService } from '../auth/services/auth.service';
 import { NavService } from '../services/nav.service';
 import { SocketService } from '../socket/socket.service';
-import { UserListComponent } from '../user/user-list/user-list.component';
 
 @Component({
   selector: 'hwfe-dashboard',
-  imports: [CommonModule, MatButtonModule, UserListComponent],
+  imports: [CommonModule, MatButtonModule, MatTabsModule, RouterModule],
   templateUrl: './dashboard.component.html',
   styleUrls: [],
   changeDetection: ChangeDetectionStrategy.OnPush,

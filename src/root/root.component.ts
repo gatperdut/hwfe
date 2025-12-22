@@ -38,7 +38,7 @@ export class RootComponent implements OnInit {
               return;
             }
 
-            this.navService.toDashboard();
+            this.navService.toDashboardUsers();
           },
           error: (): void => {
             this.navService.toAuthLogin();

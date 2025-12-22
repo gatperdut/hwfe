@@ -4,4 +4,28 @@
 
 {{ authService.user() | json }}
 
-<hwfe-user-list></hwfe-user-list>
+<nav mat-tab-nav-bar [tabPanel]="tabPanel">
+  <a
+    mat-tab-link
+    [routerLink]="['users']"
+    routerLinkActive
+    #rlaUsers="routerLinkActive"
+    [active]="rlaUsers.isActive"
+  >
+    Users
+  </a>
+
+  <a
+    mat-tab-link
+    [routerLink]="['characters']"
+    routerLinkActive
+    #rlaCharacters="routerLinkActive"
+    [active]="rlaCharacters.isActive"
+  >
+    Characters
+  </a>
+</nav>
+
+<mat-tab-nav-panel #tabPanel>
+  <router-outlet></router-outlet>
+</mat-tab-nav-panel>

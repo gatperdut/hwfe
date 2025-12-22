@@ -50,7 +50,7 @@ export class AuthLoginComponent {
       .pipe(
         tap({
           next: (): void => {
-            this.navService.toDashboard();
+            this.navService.toDashboardUsers();
           },
         })
       )
