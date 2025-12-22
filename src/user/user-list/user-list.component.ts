@@ -17,6 +17,7 @@ import {
   tap,
 } from 'rxjs';
 import { PaginationService } from '../../services/pagination.service';
+import { SocketUsersService } from '../../socket/socket-users.service';
 import { Paginated } from '../../types/paginated.type';
 import { TypedForm } from '../../types/typed-form.type';
 import { TypeSafeMatCellDefDirective } from '../../utils/typesafe-mat-cell-def.directive';
@@ -44,6 +45,7 @@ export class UserListComponent {
   private userApiService: UserApiService = inject(UserApiService);
   public paginationService: PaginationService = inject(PaginationService);
   private formBuilder: FormBuilder = inject(FormBuilder);
+  private socketUsersService: SocketUsersService = inject(SocketUsersService);
 
   private destroyRef: DestroyRef = inject(DestroyRef);
 
@@ -64,14 +66,41 @@ export class UserListComponent {
         startWith(this.paginationService.meta.page())
       ),
       this.formGroup.valueChanges.pipe(startWith(this.formGroup.value), debounceTime(500)),
+      this.socketUsersService.users$,
     ]).pipe(
       takeUntilDestroyed(this.destroyRef),
       switchMap(
-        (): Observable<Paginated<User>> =>
-          this.userApiService.search({
-            ...this.paginationService.toPagination(),
-            ...this.formGroup.getRawValue(),
-          })
+        (
+          values: [
+            number,
+            Partial<{
+              term: string;
+            }>,
+            User[],
+          ]
+        ): Observable<Paginated<User>> =>
+          this.userApiService
+            .search({
+              ...this.paginationService.toPagination(),
+              ...this.formGroup.getRawValue(),
+            })
+            .pipe(
+              tap((response: Paginated<User>): void => {
+                response.items.forEach((user: User): void => {
+                  const socketUser: User | undefined = values[2].find(
+                    (someSocketUser: User): boolean => user.id === someSocketUser.id
+                  );
+
+                  if (!socketUser) {
+                    user._socketIds = [];
+
+                    return;
+                  }
+
+                  user._socketIds = socketUser._socketIds.slice();
+                });
+              })
+            )
       ),
       tap((response: Paginated<User>): void => {
         this.paginationService.meta.total.set(response.meta.total);

@@ -1,26 +1,30 @@
 import { inject, Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { environment } from '../environments/environment';
-import { User } from '../user/types/user.type';
-import { SocketUserService } from './socket-user.service';
+import {
+  SocketUsersAllPayload,
+  SocketUsersJoinPayload,
+  SocketUsersLeavePayload,
+  SocketUsersService,
+} from './socket-users.service';
 
 @Injectable({ providedIn: 'root' })
 export class SocketService {
-  private socketUserService: SocketUserService = inject(SocketUserService);
+  private socketUsersService: SocketUsersService = inject(SocketUsersService);
 
   private socket: Socket = io(environment.apiUrl, { autoConnect: false });
 
   constructor() {
-    this.socket.on('users:all', (users: User[]): void => {
-      this.socketUserService.all(users);
+    this.socket.on('users:all', (payload: SocketUsersAllPayload): void => {
+      this.socketUsersService.all(payload);
     });
 
-    this.socket.on('users:join', (user: User): void => {
-      this.socketUserService.join(user);
+    this.socket.on('users:join', (payload: SocketUsersJoinPayload): void => {
+      this.socketUsersService.join(payload);
     });
 
-    this.socket.on('users:leave', (user: User): void => {
-      this.socketUserService.leave(user);
+    this.socket.on('users:leave', (payload: SocketUsersLeavePayload): void => {
+      this.socketUsersService.leave(payload);
     });
   }
 
