@@ -6,7 +6,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
-import { combineLatest, debounceTime, map, Observable, startWith, switchMap, tap } from 'rxjs';
+import {
+  combineLatest,
+  debounceTime,
+  map,
+  Observable,
+  shareReplay,
+  startWith,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { PaginationService } from '../../services/pagination.service';
 import { Paginated } from '../../types/paginated.type';
 import { TypedForm } from '../../types/typed-form.type';
@@ -71,7 +80,8 @@ export class UserListComponent {
       }),
       map((response: Paginated<User>): User[] => {
         return response.items;
-      })
+      }),
+      shareReplay()
     );
   }
 }
