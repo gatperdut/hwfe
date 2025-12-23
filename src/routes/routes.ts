@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
-import { AuthLoginComponent } from './auth/login/auth-login.component';
-import { AuthRegisterComponent } from './auth/register/auth-register.component';
-import { AuthenticatedComponent } from './authenticated/authenticated.component';
-import { CharacterAllComponent } from './character/character-all/character-all.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { UserAllComponent } from './user/user-all/user-all.component';
-import { UserCharactersComponent } from './user/user-characters/user-characters.component';
+import { AuthLoginComponent } from '../auth/login/auth-login.component';
+import { AuthRegisterComponent } from '../auth/register/auth-register.component';
+import { AuthenticatedComponent } from '../authenticated/authenticated.component';
+import { CharacterAllComponent } from '../character/character-all/character-all.component';
+import { DashboardComponent } from '../dashboard/dashboard.component';
+import { UserAllComponent } from '../user/user-all/user-all.component';
+import { UserCharactersComponent } from '../user/user-characters/user-characters.component';
 
 export const routes: Routes = [
   {

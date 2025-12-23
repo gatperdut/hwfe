@@ -15,15 +15,17 @@
     Users
   </a>
 
-  <a
-    mat-tab-link
-    [routerLink]="['characters-all']"
-    routerLinkActive
-    #rlaCharactersAll="routerLinkActive"
-    [active]="rlaCharactersAll.isActive"
-  >
-    Characters
-  </a>
+  @if (authService.user()?.admin) {
+    <a
+      mat-tab-link
+      [routerLink]="['characters-all']"
+      routerLinkActive
+      #rlaCharactersAll="routerLinkActive"
+      [active]="rlaCharactersAll.isActive"
+    >
+      Characters
+    </a>
+  }
 
   <a
     mat-tab-link

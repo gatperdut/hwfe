@@ -6,7 +6,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { provideRouter, withEnabledBlockingInitialNavigation } from '@angular/router';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { RootComponent } from './root/root.component';
-import { routes } from './routes';
+import { routes } from './routes/routes';
 import { AlwaysErrorStateMatcher } from './utils/forms/always.error-state-matcher';
 
 const applicationConfig: ApplicationConfig = {
