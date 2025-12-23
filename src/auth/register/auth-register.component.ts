@@ -87,7 +87,7 @@ export class AuthRegisterComponent {
 
       return timer(500).pipe(
         switchMap((): Observable<boolean> => {
-          return this.userApiService.availableEmail(control.value);
+          return this.userApiService.availabilityEmail(control.value);
         }),
         map((available: boolean): ValidationErrors | null => {
           return available ? null : { unavailable: true };
@@ -111,7 +111,7 @@ export class AuthRegisterComponent {
 
       return timer(500).pipe(
         switchMap((): Observable<boolean> => {
-          return this.userApiService.availableDisplayName(control.value);
+          return this.userApiService.availabilityDisplayName(control.value);
         }),
         map((available: boolean): ValidationErrors | null => {
           return available ? null : { unavailable: true };

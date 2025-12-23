@@ -17,12 +17,22 @@
 
   <a
     mat-tab-link
-    [routerLink]="['characters']"
+    [routerLink]="['characters-all']"
     routerLinkActive
-    #rlaCharacters="routerLinkActive"
-    [active]="rlaCharacters.isActive"
+    #rlaCharactersAll="routerLinkActive"
+    [active]="rlaCharactersAll.isActive"
   >
     Characters
+  </a>
+
+  <a
+    mat-tab-link
+    [routerLink]="['user-characters']"
+    routerLinkActive
+    #rlaUserCharacters="routerLinkActive"
+    [active]="rlaUserCharacters.isActive"
+  >
+    Your characters
   </a>
 </nav>
 

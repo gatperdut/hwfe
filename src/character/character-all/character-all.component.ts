@@ -17,16 +17,16 @@ import {
   tap,
 } from 'rxjs';
 import { PaginationService } from '../../services/pagination.service';
-import { SocketUsersService } from '../../socket/socket-users.service';
 import { Paginated } from '../../types/paginated.type';
 import { TypedForm } from '../../types/typed-form.type';
 import { TypeSafeMatCellDefDirective } from '../../utils/typesafe-mat-cell-def.directive';
-import { UserApiService } from '../services/user-api.service';
-import { User } from '../types/user.type';
-import { UserListFilter } from './types/user-list-filter.type';
+import { CharacterAllSearchDto } from '../dto/character-all-search.dto';
+import { CharacterApiService } from '../services/character-api.service';
+import { CharacterClass } from '../types/character-class.type';
+import { Character } from '../types/character.type';
 
 @Component({
-  selector: 'hwfe-user-list',
+  selector: 'hwfe-character-all',
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -36,78 +36,56 @@ import { UserListFilter } from './types/user-list-filter.type';
     MatInputModule,
     TypeSafeMatCellDefDirective,
   ],
-  templateUrl: './user-list.component.html',
+  templateUrl: './character-all.component.html',
   styleUrls: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [PaginationService],
 })
-export class UserListComponent {
-  private userApiService: UserApiService = inject(UserApiService);
+export class CharacterAllComponent {
+  private characterApiService: CharacterApiService = inject(CharacterApiService);
   public paginationService: PaginationService = inject(PaginationService);
   private formBuilder: FormBuilder = inject(FormBuilder);
-  private socketUsersService: SocketUsersService = inject(SocketUsersService);
 
   private destroyRef: DestroyRef = inject(DestroyRef);
 
-  public users$: Observable<User[]>;
+  public characters$: Observable<Character[]>;
 
-  public columns: string[] = ['displayName', 'email', 'admin'];
+  public columns: string[] = ['name', 'class'];
 
-  public formGroup: FormGroup<TypedForm<UserListFilter>> = this.formBuilder.group({
-    term: this.formBuilder.control('', {
+  public formGroup: FormGroup<TypedForm<CharacterAllSearchDto>> = this.formBuilder.group({
+    term: this.formBuilder.control('' as string | undefined, {
       nonNullable: true,
       validators: [],
+    }),
+    class: this.formBuilder.control(undefined as CharacterClass | undefined, {
+      nonNullable: true,
+    }),
+    userId: this.formBuilder.control(undefined as number | undefined, {
+      nonNullable: true,
     }),
   });
 
   constructor() {
-    this.users$ = combineLatest([
+    this.characters$ = combineLatest([
       toObservable(this.paginationService.meta.page).pipe(
         startWith(this.paginationService.meta.page())
       ),
       this.formGroup.valueChanges.pipe(startWith(this.formGroup.value), debounceTime(500)),
-      this.socketUsersService.users$,
     ]).pipe(
       takeUntilDestroyed(this.destroyRef),
       switchMap(
-        (
-          values: [
-            number,
-            Partial<{
-              term: string;
-            }>,
-            User[],
-          ]
-        ): Observable<Paginated<User>> =>
-          this.userApiService
-            .search({
-              ...this.paginationService.toPagination(),
-              ...this.formGroup.getRawValue(),
-            })
-            .pipe(
-              tap((response: Paginated<User>): void => {
-                response.items.forEach((user: User): void => {
-                  const socketUser: User | undefined = values[2].find(
-                    (someSocketUser: User): boolean => user.id === someSocketUser.id
-                  );
-
-                  if (!socketUser) {
-                    user._socketIds = [];
-
-                    return;
-                  }
-
-                  user._socketIds = socketUser._socketIds.slice();
-                });
-              })
-            )
+        (): Observable<Paginated<Character>> =>
+          this.characterApiService.all({
+            ...this.paginationService.toPagination(),
+            ...this.formGroup.value,
+          })
       ),
-      tap((response: Paginated<User>): void => {
+      tap((response: Paginated<Character>): void => {
         this.paginationService.meta.total.set(response.meta.total);
 
         this.paginationService.meta.pages.set(response.meta.pages);
       }),
-      map((response: Paginated<User>): User[] => {
+      map((response: Paginated<Character>): Character[] => {
         return response.items;
       }),
       shareReplay()

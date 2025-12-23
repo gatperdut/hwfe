@@ -21,10 +21,10 @@
     </mat-header-cell>
 
     <mat-cell *matCellDef="let user; dataSource: users$ | async">
-      <span
-        >{{ user.displayName }} ({{ user._socketIds.length ? 'Active' : 'Inactive' }}
-        {{ user._socketIds.length }})</span
-      >
+      <span>
+        <span>{{ user.displayName }} ({{ user._socketIds.length ? 'Active' : 'Inactive' }}</span>
+        <span>{{ user._socketIds.length }})</span>
+      </span>
     </mat-cell>
   </ng-container>
 
