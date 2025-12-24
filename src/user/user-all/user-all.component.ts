@@ -42,10 +42,10 @@ import { UserAllFilter } from './types/user-all-filter.type';
   providers: [PaginationService],
 })
 export class UserAllComponent {
-  private userApiService: UserApiService = inject(UserApiService);
-  public paginationService: PaginationService = inject(PaginationService);
-  private formBuilder: FormBuilder = inject(FormBuilder);
-  private socketUsersService: SocketUsersService = inject(SocketUsersService);
+  private userApiService = inject(UserApiService);
+  public paginationService = inject(PaginationService);
+  private formBuilder = inject(FormBuilder);
+  private socketUsersService = inject(SocketUsersService);
 
   private destroyRef: DestroyRef = inject(DestroyRef);
 

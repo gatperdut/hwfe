@@ -4,7 +4,28 @@
 
     <input matInput type="text" formControlName="term" />
   </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Class</mat-label>
+    <mat-select formControlName="class">
+      <mat-select-trigger>
+        {{ formGroup.controls.class.value }}
+      </mat-select-trigger>
+
+      @for (option of characterClasses; track option) {
+        <mat-option [value]="option">{{ option }}</mat-option>
+      }
+    </mat-select>
+
+    <mat-icon
+      matSuffix
+      (click)="$event.stopPropagation(); formGroup.controls.class.setValue(undefined)"
+      >close</mat-icon
+    >
+  </mat-form-field>
 </form>
+
+<button type="button" mat-button (click)="create()">Create</button>
 
 <mat-paginator
   [length]="paginationService.meta.total()"

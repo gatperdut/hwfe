@@ -15,7 +15,7 @@ import { User } from '../types/user.type';
 
 @Injectable({ providedIn: 'root' })
 export class UserApiService {
-  private httpClient: HttpClient = inject(HttpClient);
+  private httpClient = inject(HttpClient);
 
   public all(params: Partial<Pagination & UserAllDto>): Observable<Paginated<User>> {
     return this.httpClient.get<Paginated<User>>(`${environment.apiUrl}/users`, {

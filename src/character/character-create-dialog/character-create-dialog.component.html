@@ -1,0 +1,34 @@
+<form [formGroup]="formGroup" (ngSubmit)="create()">
+  <div mat-dialog-title>Create character</div>
+
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+
+      <input matInput type="text" formControlName="name" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Class</mat-label>
+      <mat-select formControlName="class">
+        <mat-select-trigger>
+          {{ formGroup.controls.class.value }}
+        </mat-select-trigger>
+
+        @for (option of characterClasses; track option) {
+          <mat-option [value]="option">{{ option }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="undefined" type="button">
+      <span>Cancel</span>
+    </button>
+
+    <button mat-button color="primary" type="submit" [disabled]="formGroup.invalid">
+      <span>Create</span>
+    </button>
+  </div>
+</form>

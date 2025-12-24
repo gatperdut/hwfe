@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class NavService {
-  private router: Router = inject(Router);
+  private router = inject(Router);
 
   public isAuthLogin(): boolean {
     return this.router.url === '/login';

@@ -1,6 +1,6 @@
 import { CharacterClass } from '../../types/character-class.type';
 
-export type CharacterEditor = {
+export type CharacterCreate = {
   name: string;
 
   class: CharacterClass;

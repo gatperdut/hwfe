@@ -38,10 +38,10 @@ import { passwordMatchValidator } from './validators/password-match.validator';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthRegisterComponent {
-  private formBuilder: FormBuilder = inject(FormBuilder);
-  private authService: AuthService = inject(AuthService);
-  private navService: NavService = inject(NavService);
-  private userApiService: UserApiService = inject(UserApiService);
+  private formBuilder = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private navService = inject(NavService);
+  private userApiService = inject(UserApiService);
 
   public formGroup: FormGroup<TypedForm<UserRegisterDto>> = this.formBuilder.group(
     {

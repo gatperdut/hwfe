@@ -42,9 +42,9 @@ import { Character } from '../types/character.type';
   providers: [PaginationService],
 })
 export class CharacterAllComponent {
-  private characterApiService: CharacterApiService = inject(CharacterApiService);
-  public paginationService: PaginationService = inject(PaginationService);
-  private formBuilder: FormBuilder = inject(FormBuilder);
+  private characterApiService = inject(CharacterApiService);
+  public paginationService = inject(PaginationService);
+  private formBuilder = inject(FormBuilder);
 
   private destroyRef: DestroyRef = inject(DestroyRef);
 

@@ -5,7 +5,7 @@ import { AuthTokenService } from './services/auth-token.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  private authTokenService: AuthTokenService = inject(AuthTokenService);
+  private authTokenService = inject(AuthTokenService);
 
   private excludedUrls: string[] = ['/auth/login', '/auth/register'];
 

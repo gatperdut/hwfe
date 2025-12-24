@@ -27,9 +27,9 @@ import { UserLoginDto } from './types/user-login.dto';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthLoginComponent {
-  private formBuilder: FormBuilder = inject(FormBuilder);
-  private authService: AuthService = inject(AuthService);
-  private navService: NavService = inject(NavService);
+  private formBuilder = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private navService = inject(NavService);
 
   public formGroup: FormGroup<TypedForm<UserLoginDto>> = this.formBuilder.group({
     email: this.formBuilder.control('', {

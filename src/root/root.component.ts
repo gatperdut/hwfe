@@ -21,8 +21,8 @@ import { User } from '../user/types/user.type';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RootComponent implements OnInit {
-  private authService: AuthService = inject(AuthService);
-  private navService: NavService = inject(NavService);
+  private authService = inject(AuthService);
+  private navService = inject(NavService);
 
   public loading: WritableSignal<boolean> = signal<boolean>(true);
 

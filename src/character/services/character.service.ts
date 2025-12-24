@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Character } from '../types/character.type';
+import { CharacterCreate } from '../character-create-dialog/dto/character-create.dto';
 
 @Injectable({ providedIn: 'root' })
 export class CharacterService {
-  public empty(userId: number): Character {
+  public new(): CharacterCreate {
     return {
       name: '',
       class: 'BARBARIAN',
-      userId: userId,
     };
   }
 }

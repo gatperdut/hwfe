@@ -12,10 +12,10 @@ import { AuthTokenService } from './auth-token.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private httpClient: HttpClient = inject(HttpClient);
-  private matSnackBar: MatSnackBar = inject(MatSnackBar);
-  private authTokenService: AuthTokenService = inject(AuthTokenService);
-  private userApiService: UserApiService = inject(UserApiService);
+  private httpClient = inject(HttpClient);
+  private matSnackBar = inject(MatSnackBar);
+  private authTokenService = inject(AuthTokenService);
+  private userApiService = inject(UserApiService);
 
   public user: WritableSignal<User | null> = signal<User | null>(null);
 

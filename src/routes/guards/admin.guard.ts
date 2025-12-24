@@ -5,8 +5,8 @@ import { User } from '../../user/types/user.type';
 
 @Injectable({ providedIn: 'root' })
 export class AdminGuard implements CanActivate {
-  private authService: AuthService = inject(AuthService);
-  private router: Router = inject(Router);
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
   canActivate(): boolean | UrlTree {
     const user: User | null = this.authService.user();

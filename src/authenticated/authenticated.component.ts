@@ -11,8 +11,8 @@ import { SocketService } from '../socket/socket.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthenticatedComponent implements OnInit {
-  private authTokenService: AuthTokenService = inject(AuthTokenService);
-  private socketService: SocketService = inject(SocketService);
+  private authTokenService = inject(AuthTokenService);
+  private socketService = inject(SocketService);
 
   public ngOnInit(): void {
     this.socketService.connect(this.authTokenService.get());

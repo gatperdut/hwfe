@@ -15,9 +15,9 @@ import { SocketService } from '../socket/socket.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardComponent {
-  public authService: AuthService = inject(AuthService);
-  private socketService: SocketService = inject(SocketService);
-  private navService: NavService = inject(NavService);
+  public authService = inject(AuthService);
+  private socketService = inject(SocketService);
+  private navService = inject(NavService);
 
   public logout(): void {
     this.authService.logout();
