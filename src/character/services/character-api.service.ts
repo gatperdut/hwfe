@@ -5,8 +5,8 @@ import { environment } from '../../environments/environment';
 import { Paginated } from '../../types/paginated.type';
 import { Pagination } from '../../types/pagination.type';
 import { dropNullish } from '../../utils/drop-nullish';
-import { CharacterCreate } from '../character-create-dialog/dto/character-create.dto';
 import { CharacterAllSearchDto } from '../dto/character-all-search.dto';
+import { CharacterCreate } from '../dto/character-create.dto';
 import { Character } from '../types/character.type';
 
 @Injectable({ providedIn: 'root' })

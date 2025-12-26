@@ -23,9 +23,31 @@
       #rlaCharactersAll="routerLinkActive"
       [active]="rlaCharactersAll.isActive"
     >
-      Characters
+      All characters
     </a>
   }
+
+  @if (authService.user()?.admin) {
+    <a
+      mat-tab-link
+      [routerLink]="['campaigns-all']"
+      routerLinkActive
+      #rlaCampaignsAll="routerLinkActive"
+      [active]="rlaCampaignsAll.isActive"
+    >
+      All campaigns
+    </a>
+  }
+
+  <a
+    mat-tab-link
+    [routerLink]="['user-campaigns']"
+    routerLinkActive
+    #rlaUserCampaigns="routerLinkActive"
+    [active]="rlaUserCampaigns.isActive"
+  >
+    Your campaigns
+  </a>
 
   <a
     mat-tab-link

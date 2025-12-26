@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { Campaign } from '../../campaign/types/campaign.type';
 import { Character } from '../../character/types/character.type';
 import { environment } from '../../environments/environment';
 import { Paginated } from '../../types/paginated.type';
@@ -10,6 +11,7 @@ import { UserAllDto } from '../dto/user-all.dto';
 import { UserAvailabilityDisplayNameDto } from '../dto/user-availability-display-name.dto';
 import { UserAvailabilityEmailDto } from '../dto/user-availability-email.dto';
 import { UserAvailabilityResponseDto } from '../dto/user-availability-response.dto';
+import { UserCampaignsDto } from '../dto/user-campaigns.dto';
 import { UserCharactersDto } from '../dto/user-characters.dto';
 import { User } from '../types/user.type';
 
@@ -49,6 +51,18 @@ export class UserApiService {
   ): Observable<Paginated<Character>> {
     return this.httpClient.get<Paginated<Character>>(
       `${environment.apiUrl}/users/${userId}/characters`,
+      {
+        params: dropNullish(search),
+      }
+    );
+  }
+
+  public campaigns(
+    userId: number,
+    search: Partial<Pagination & UserCampaignsDto>
+  ): Observable<Paginated<Campaign>> {
+    return this.httpClient.get<Paginated<Campaign>>(
+      `${environment.apiUrl}/users/${userId}/campaigns`,
       {
         params: dropNullish(search),
       }

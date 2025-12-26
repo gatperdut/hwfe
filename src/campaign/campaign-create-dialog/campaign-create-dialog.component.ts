@@ -13,30 +13,26 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { TypedForm } from '../../types/typed-form.type';
-import { CharacterCreate } from '../dto/character-create.dto';
-import { CharacterClasses } from '../types/character-class.type';
+import { CampaignCreate } from '../dto/campaign-create.dto';
 
-export type CharacterCreateDialogData = {
-  character: CharacterCreate;
+export type CampaignCreateDialogData = {
+  campaign: CampaignCreate;
 };
 
-export type CharacterCreateDialogResult = CharacterCreate | undefined;
+export type CampaignCreateDialogResult = CampaignCreate | undefined;
 
-export const openCharacterCreateDialog = (
-  matDialog: MatDialog,
-  data: CharacterCreateDialogData
-) => {
+export const openCampaignCreateDialog = (matDialog: MatDialog, data: CampaignCreateDialogData) => {
   return matDialog.open<
-    CharacterCreateDialogComponent,
-    CharacterCreateDialogData,
-    CharacterCreateDialogResult
-  >(CharacterCreateDialogComponent, {
+    CampaignCreateDialogComponent,
+    CampaignCreateDialogData,
+    CampaignCreateDialogResult
+  >(CampaignCreateDialogComponent, {
     data,
   });
 };
 
 @Component({
-  selector: 'hwfe-character-create-dialog',
+  selector: 'hwfe-campaign-create-dialog',
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -46,31 +42,25 @@ export const openCharacterCreateDialog = (
     MatDialogModule,
     MatButtonModule,
   ],
-  templateUrl: './character-create-dialog.component.html',
+  templateUrl: './campaign-create-dialog.component.html',
   styleUrls: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CharacterCreateDialogComponent implements OnInit {
+export class CampaignCreateDialogComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
 
-  public formGroup!: FormGroup<TypedForm<CharacterCreate>>;
-
-  public characterClasses = CharacterClasses;
+  public formGroup!: FormGroup<TypedForm<CampaignCreate>>;
 
   constructor(
-    public matDialogRef: MatDialogRef<CharacterCreateDialogComponent, CharacterCreateDialogResult>,
-    @Inject(MAT_DIALOG_DATA) public data: CharacterCreateDialogData
+    public matDialogRef: MatDialogRef<CampaignCreateDialogComponent, CampaignCreateDialogResult>,
+    @Inject(MAT_DIALOG_DATA) public data: CampaignCreateDialogData
   ) {
     // Empty
   }
 
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
-      name: this.formBuilder.control(this.data.character.name, {
-        nonNullable: true,
-        validators: [Validators.required],
-      }),
-      class: this.formBuilder.control(this.data.character.class, {
+      name: this.formBuilder.control(this.data.campaign.name, {
         nonNullable: true,
         validators: [Validators.required],
       }),
@@ -78,6 +68,6 @@ export class CharacterCreateDialogComponent implements OnInit {
   }
 
   public create(): void {
-    this.matDialogRef.close(this.formGroup.value as CharacterCreate);
+    this.matDialogRef.close(this.formGroup.value as CampaignCreate);
   }
 }

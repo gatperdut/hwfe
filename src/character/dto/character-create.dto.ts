@@ -1,4 +1,4 @@
-import { CharacterClass } from '../../types/character-class.type';
+import { CharacterClass } from '../types/character-class.type';
 
 export type CharacterCreate = {
   name: string;

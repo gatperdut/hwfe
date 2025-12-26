@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CharacterCreate } from '../character-create-dialog/dto/character-create.dto';
+import { CharacterCreate } from '../dto/character-create.dto';
 
 @Injectable({ providedIn: 'root' })
 export class CharacterService {
