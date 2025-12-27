@@ -27,6 +27,32 @@
     </mat-cell>
   </ng-container>
 
+  <ng-container matColumnDef="master">
+    <mat-header-cell *matHeaderCellDef>
+      <span>Master</span>
+    </mat-header-cell>
+
+    <mat-cell *matCellDef="let campaign; dataSource: campaigns$ | async">
+      <span>
+        {{ campaign.master?.displayName }}
+      </span>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="players">
+    <mat-header-cell *matHeaderCellDef>
+      <span>Players</span>
+    </mat-header-cell>
+
+    <mat-cell *matCellDef="let campaign; dataSource: campaigns$ | async">
+      @for (player of campaign.players; track player) {
+        <span>
+          {{ player.user.displayName }} ({{ player.character.name }} - {{ player.character.class }})
+        </span>
+      }
+    </mat-cell>
+  </ng-container>
+
   <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
   <mat-row *matRowDef="let campaign; columns: columns"></mat-row>
 </mat-table>

@@ -7,6 +7,7 @@ export type User = {
 
   admin: boolean;
 
+  // TODO drop this. Create UserCurrent which holds this as a non-synthetic field.
   // Synthetic fields
 
   _socketIds: string[];

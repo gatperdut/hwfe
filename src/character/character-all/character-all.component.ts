@@ -20,7 +20,7 @@ import { PaginationService } from '../../services/pagination.service';
 import { Paginated } from '../../types/paginated.type';
 import { TypedForm } from '../../types/typed-form.type';
 import { TypeSafeMatCellDefDirective } from '../../utils/typesafe-mat-cell-def.directive';
-import { CharacterAllSearchDto } from '../dto/character-all-search.dto';
+import { CharacterAllDto } from '../dto/character-all.dto';
 import { CharacterApiService } from '../services/character-api.service';
 import { CharacterClass } from '../types/character-class.type';
 import { Character } from '../types/character.type';
@@ -52,7 +52,7 @@ export class CharacterAllComponent {
 
   public columns: string[] = ['name', 'class'];
 
-  public formGroup: FormGroup<TypedForm<CharacterAllSearchDto>> = this.formBuilder.group({
+  public formGroup: FormGroup<TypedForm<CharacterAllDto>> = this.formBuilder.group({
     term: this.formBuilder.control('' as string | undefined, {
       nonNullable: true,
       validators: [],

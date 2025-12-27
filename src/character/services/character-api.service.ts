@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 import { Paginated } from '../../types/paginated.type';
 import { Pagination } from '../../types/pagination.type';
 import { dropNullish } from '../../utils/drop-nullish';
-import { CharacterAllSearchDto } from '../dto/character-all-search.dto';
+import { CharacterAllDto } from '../dto/character-all.dto';
 import { CharacterCreate } from '../dto/character-create.dto';
 import { Character } from '../types/character.type';
 
@@ -13,9 +13,7 @@ import { Character } from '../types/character.type';
 export class CharacterApiService {
   private httpClient = inject(HttpClient);
 
-  public all(
-    params: Partial<Pagination & CharacterAllSearchDto>
-  ): Observable<Paginated<Character>> {
+  public all(params: Partial<Pagination & CharacterAllDto>): Observable<Paginated<Character>> {
     return this.httpClient.get<Paginated<Character>>(`${environment.apiUrl}/characters`, {
       params: dropNullish(params),
     });

@@ -1,4 +1,4 @@
-export type CampaignAllSearchDto = {
+export type CampaignAllDto = {
   term: string | undefined;
 
   masterId: number | undefined;

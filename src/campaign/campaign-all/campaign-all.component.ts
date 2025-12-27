@@ -20,7 +20,7 @@ import { PaginationService } from '../../services/pagination.service';
 import { Paginated } from '../../types/paginated.type';
 import { TypedForm } from '../../types/typed-form.type';
 import { TypeSafeMatCellDefDirective } from '../../utils/typesafe-mat-cell-def.directive';
-import { CampaignAllSearchDto } from '../dto/campaign-all-search.dto';
+import { CampaignAllDto } from '../dto/campaign-all.dto';
 import { CampaignApiService } from '../services/campaign-api.service';
 import { Campaign } from '../types/campaign.type';
 
@@ -49,9 +49,9 @@ export class CampaignAllComponent {
 
   public campaigns$: Observable<Campaign[]>;
 
-  public columns: string[] = ['name'];
+  public columns: string[] = ['name', 'master', 'players'];
 
-  public formGroup: FormGroup<TypedForm<CampaignAllSearchDto>> = this.formBuilder.group({
+  public formGroup: FormGroup<TypedForm<CampaignAllDto>> = this.formBuilder.group({
     term: this.formBuilder.control('' as string | undefined, {
       nonNullable: true,
       validators: [],
@@ -62,6 +62,7 @@ export class CampaignAllComponent {
   });
 
   constructor() {
+    // TODO when the filter is modified, set page to 1. Do the same in all such tables with filters.
     this.campaigns$ = combineLatest([
       toObservable(this.paginationService.meta.page).pipe(
         startWith(this.paginationService.meta.page())
@@ -74,6 +75,8 @@ export class CampaignAllComponent {
           this.campaignApiService.all({
             ...this.paginationService.toPagination(),
             ...this.formGroup.value,
+            includeMaster: true,
+            includePlayers: true,
           })
       ),
       tap((response: Paginated<Campaign>): void => {
