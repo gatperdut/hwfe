@@ -23,7 +23,7 @@ import { TypedForm } from '../../types/typed-form.type';
 import { TypeSafeMatCellDefDirective } from '../../utils/typesafe-mat-cell-def.directive';
 import { UserApiService } from '../services/user-api.service';
 import { User } from '../types/user.type';
-import { UserAllFilter } from './types/user-all-filter.type';
+import { UserAllDto } from './dto/user-all.dto';
 
 @Component({
   selector: 'hwfe-user-all',
@@ -46,14 +46,13 @@ export class UserAllComponent {
   public paginationService = inject(PaginationService);
   private formBuilder = inject(FormBuilder);
   private socketUsersService = inject(SocketUsersService);
-
   private destroyRef: DestroyRef = inject(DestroyRef);
 
   public users$: Observable<User[]>;
 
   public columns: string[] = ['displayName', 'email', 'admin'];
 
-  public formGroup: FormGroup<TypedForm<UserAllFilter>> = this.formBuilder.group({
+  public formGroup: FormGroup<TypedForm<UserAllDto>> = this.formBuilder.group({
     term: this.formBuilder.control('', {
       nonNullable: true,
       validators: [],
@@ -76,7 +75,7 @@ export class UserAllComponent {
     ]).pipe(
       takeUntilDestroyed(this.destroyRef),
       switchMap(
-        (values: [number, Partial<UserAllFilter>, User[]]): Observable<Paginated<User>> =>
+        (values: [number, Partial<UserAllDto>, User[]]): Observable<Paginated<User>> =>
           this.userApiService
             .all({
               ...this.paginationService.toPagination(),

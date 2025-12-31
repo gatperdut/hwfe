@@ -1,3 +1,3 @@
-export type CampaignCreate = {
+export type CampaignCreateDto = {
   name: string;
 };

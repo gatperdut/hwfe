@@ -13,14 +13,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { TypedForm } from '../../types/typed-form.type';
-import { CharacterCreate } from '../dto/character-create.dto';
+import { CharacterCreateDto } from '../dto/character-create.dto';
 import { CharacterClasses } from '../types/character-class.type';
 
 export type CharacterCreateDialogData = {
-  character: CharacterCreate;
+  character: CharacterCreateDto;
 };
 
-export type CharacterCreateDialogResult = CharacterCreate | undefined;
+export type CharacterCreateDialogResult = CharacterCreateDto | undefined;
 
 export const openCharacterCreateDialog = (
   matDialog: MatDialog,
@@ -53,7 +53,7 @@ export const openCharacterCreateDialog = (
 export class CharacterCreateDialogComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
 
-  public formGroup!: FormGroup<TypedForm<CharacterCreate>>;
+  public formGroup!: FormGroup<TypedForm<CharacterCreateDto>>;
 
   public characterClasses = CharacterClasses;
 
@@ -78,6 +78,6 @@ export class CharacterCreateDialogComponent implements OnInit {
   }
 
   public create(): void {
-    this.matDialogRef.close(this.formGroup.value as CharacterCreate);
+    this.matDialogRef.close(this.formGroup.value as CharacterCreateDto);
   }
 }

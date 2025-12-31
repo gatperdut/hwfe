@@ -4,6 +4,7 @@ import { map, Observable } from 'rxjs';
 import { CampaignIncludeDto } from '../../campaign/dto/campaign-include.dto';
 import { Campaign } from '../../campaign/types/campaign.type';
 import { Character } from '../../character/types/character.type';
+import { WithoutIdsDto } from '../../dto/without-ids.dto';
 import { environment } from '../../environments/environment';
 import { Paginated } from '../../types/paginated.type';
 import { Pagination } from '../../types/pagination.type';
@@ -20,7 +21,9 @@ import { User } from '../types/user.type';
 export class UserApiService {
   private httpClient = inject(HttpClient);
 
-  public all(params: Partial<Pagination & UserAllDto>): Observable<Paginated<User>> {
+  public all(
+    params: Partial<Pagination & WithoutIdsDto & UserAllDto>
+  ): Observable<Paginated<User>> {
     return this.httpClient.get<Paginated<User>>(`${environment.apiUrl}/users`, {
       params: dropIrrelevantParams(params),
     });

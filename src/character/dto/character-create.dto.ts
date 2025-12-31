@@ -1,6 +1,6 @@
 import { CharacterClass } from '../types/character-class.type';
 
-export type CharacterCreate = {
+export type CharacterCreateDto = {
   name: string;
 
   class: CharacterClass;

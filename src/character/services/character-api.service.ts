@@ -6,7 +6,7 @@ import { Paginated } from '../../types/paginated.type';
 import { Pagination } from '../../types/pagination.type';
 import { dropIrrelevantParams } from '../../utils/drop-irrelevant-params';
 import { CharacterAllDto } from '../dto/character-all.dto';
-import { CharacterCreate } from '../dto/character-create.dto';
+import { CharacterCreateDto } from '../dto/character-create.dto';
 import { Character } from '../types/character.type';
 
 @Injectable({ providedIn: 'root' })
@@ -19,7 +19,7 @@ export class CharacterApiService {
     });
   }
 
-  public create(userId: number, params: CharacterCreate): Observable<Character> {
+  public create(userId: number, params: CharacterCreateDto): Observable<Character> {
     return this.httpClient.post<Character>(`${environment.apiUrl}/characters`, {
       ...params,
       userId: userId,

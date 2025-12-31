@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { CampaignCreate } from '../dto/campaign-create.dto';
+import { CampaignCreateDto } from '../dto/campaign-create.dto';
 
 @Injectable({ providedIn: 'root' })
 export class CampaignService {
-  public new(): CampaignCreate {
+  public new(): CampaignCreateDto {
     return {
       name: '',
     };

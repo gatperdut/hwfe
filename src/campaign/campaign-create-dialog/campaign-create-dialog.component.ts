@@ -13,13 +13,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { TypedForm } from '../../types/typed-form.type';
-import { CampaignCreate } from '../dto/campaign-create.dto';
+import { CampaignCreateDto } from '../dto/campaign-create.dto';
 
 export type CampaignCreateDialogData = {
-  campaign: CampaignCreate;
+  campaign: CampaignCreateDto;
 };
 
-export type CampaignCreateDialogResult = CampaignCreate | undefined;
+export type CampaignCreateDialogResult = CampaignCreateDto | undefined;
 
 export const openCampaignCreateDialog = (matDialog: MatDialog, data: CampaignCreateDialogData) => {
   return matDialog.open<
@@ -49,7 +49,7 @@ export const openCampaignCreateDialog = (matDialog: MatDialog, data: CampaignCre
 export class CampaignCreateDialogComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
 
-  public formGroup!: FormGroup<TypedForm<CampaignCreate>>;
+  public formGroup!: FormGroup<TypedForm<CampaignCreateDto>>;
 
   constructor(
     public matDialogRef: MatDialogRef<CampaignCreateDialogComponent, CampaignCreateDialogResult>,
@@ -68,6 +68,6 @@ export class CampaignCreateDialogComponent implements OnInit {
   }
 
   public create(): void {
-    this.matDialogRef.close(this.formGroup.value as CampaignCreate);
+    this.matDialogRef.close(this.formGroup.value as CampaignCreateDto);
   }
 }

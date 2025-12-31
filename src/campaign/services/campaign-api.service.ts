@@ -6,7 +6,7 @@ import { Paginated } from '../../types/paginated.type';
 import { Pagination } from '../../types/pagination.type';
 import { dropIrrelevantParams } from '../../utils/drop-irrelevant-params';
 import { CampaignAllDto } from '../dto/campaign-all.dto';
-import { CampaignCreate } from '../dto/campaign-create.dto';
+import { CampaignCreateDto } from '../dto/campaign-create.dto';
 import { CampaignIncludeDto } from '../dto/campaign-include.dto';
 import { Campaign } from '../types/campaign.type';
 
@@ -22,7 +22,7 @@ export class CampaignApiService {
     });
   }
 
-  public create(userId: number, params: CampaignCreate): Observable<Campaign> {
+  public create(userId: number, params: CampaignCreateDto): Observable<Campaign> {
     return this.httpClient.post<Campaign>(`${environment.apiUrl}/campaigns`, {
       userId: userId,
       ...params,

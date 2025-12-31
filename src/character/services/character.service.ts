@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { CharacterCreate } from '../dto/character-create.dto';
+import { CharacterCreateDto } from '../dto/character-create.dto';
 
 @Injectable({ providedIn: 'root' })
 export class CharacterService {
-  public new(): CharacterCreate {
+  public new(): CharacterCreateDto {
     return {
       name: '',
       class: 'BARBARIAN',

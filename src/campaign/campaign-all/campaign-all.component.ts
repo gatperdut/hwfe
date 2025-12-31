@@ -19,6 +19,7 @@ import {
 import { PaginationService } from '../../services/pagination.service';
 import { Paginated } from '../../types/paginated.type';
 import { TypedForm } from '../../types/typed-form.type';
+import { UserPickerComponent } from '../../user/user-picker/user-picker.component';
 import { TypeSafeMatCellDefDirective } from '../../utils/typesafe-mat-cell-def.directive';
 import { CampaignAllDto } from '../dto/campaign-all.dto';
 import { CampaignApiService } from '../services/campaign-api.service';
@@ -34,6 +35,7 @@ import { Campaign } from '../types/campaign.type';
     MatFormFieldModule,
     MatInputModule,
     TypeSafeMatCellDefDirective,
+    UserPickerComponent,
   ],
   templateUrl: './campaign-all.component.html',
   styleUrls: [],

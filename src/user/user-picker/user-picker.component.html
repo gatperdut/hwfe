@@ -1,0 +1,30 @@
+<form [formGroup]="formGroup">
+  <mat-form-field>
+    <mat-label>Search for a user</mat-label>
+
+    <mat-select #userSelect (selectionChange)="selectionChanged($event.value)">
+      <mat-option>
+        <ngx-mat-select-search
+          formControlName="term"
+          placeholderLabel=""
+          noEntriesFoundLabel="No users found"
+          [hideClearSearchButton]="true"
+        ></ngx-mat-select-search>
+      </mat-option>
+
+      @for (option of users$ | async; track option.id) {
+        <mat-option [value]="option">{{ option.displayName }}</mat-option>
+      }
+    </mat-select>
+
+    <button
+      mat-icon-button
+      matSuffix
+      type="button"
+      (click)="selectionCleared(userSelect)"
+      [disabled]="!userSelect.value"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</form>

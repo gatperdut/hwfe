@@ -28,6 +28,7 @@ import { Paginated } from '../../types/paginated.type';
 import { TypedForm } from '../../types/typed-form.type';
 import { UserCampaignsDto } from '../../user/dto/user-campaigns.dto';
 import { UserApiService } from '../../user/services/user-api.service';
+import { UserPickerComponent } from '../../user/user-picker/user-picker.component';
 import { TypeSafeMatCellDefDirective } from '../../utils/typesafe-mat-cell-def.directive';
 import {
   CampaignCreateDialogResult,
@@ -49,6 +50,7 @@ import { Campaign } from '../types/campaign.type';
     MatInputModule,
     TypeSafeMatCellDefDirective,
     MatButtonModule,
+    UserPickerComponent,
   ],
   templateUrl: './user-campaigns.component.html',
   styleUrls: [],
@@ -56,7 +58,7 @@ import { Campaign } from '../types/campaign.type';
   providers: [PaginationService],
 })
 export class UserCampaignsComponent {
-  private authService = inject(AuthService);
+  public authService = inject(AuthService);
   private userApiService = inject(UserApiService);
   public paginationService = inject(PaginationService);
   private formBuilder = inject(FormBuilder);
