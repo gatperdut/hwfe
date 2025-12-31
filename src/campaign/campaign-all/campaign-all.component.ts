@@ -56,7 +56,7 @@ export class CampaignAllComponent {
       nonNullable: true,
       validators: [],
     }),
-    masterId: this.formBuilder.control(undefined as number | undefined, {
+    participantId: this.formBuilder.control(undefined as number | undefined, {
       nonNullable: true,
     }),
   });
@@ -67,7 +67,13 @@ export class CampaignAllComponent {
       toObservable(this.paginationService.meta.page).pipe(
         startWith(this.paginationService.meta.page())
       ),
-      this.formGroup.valueChanges.pipe(startWith(this.formGroup.value), debounceTime(500)),
+      this.formGroup.valueChanges.pipe(
+        startWith(this.formGroup.value),
+        debounceTime(500),
+        tap((): void => {
+          this.paginationService.meta.page.set(0);
+        })
+      ),
     ]).pipe(
       takeUntilDestroyed(this.destroyRef),
       switchMap(

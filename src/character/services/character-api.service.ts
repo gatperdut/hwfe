@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Paginated } from '../../types/paginated.type';
 import { Pagination } from '../../types/pagination.type';
-import { dropNullish } from '../../utils/drop-nullish';
+import { dropIrrelevantParams } from '../../utils/drop-irrelevant-params';
 import { CharacterAllDto } from '../dto/character-all.dto';
 import { CharacterCreate } from '../dto/character-create.dto';
 import { Character } from '../types/character.type';
@@ -15,7 +15,7 @@ export class CharacterApiService {
 
   public all(params: Partial<Pagination & CharacterAllDto>): Observable<Paginated<Character>> {
     return this.httpClient.get<Paginated<Character>>(`${environment.apiUrl}/characters`, {
-      params: dropNullish(params),
+      params: dropIrrelevantParams(params),
     });
   }
 

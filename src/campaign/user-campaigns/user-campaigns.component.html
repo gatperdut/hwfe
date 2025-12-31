@@ -4,6 +4,12 @@
 
     <input matInput type="text" formControlName="term" />
   </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Participant</mat-label>
+
+    <input matInput type="number" formControlName="participantId" />
+  </mat-form-field>
 </form>
 
 <button type="button" mat-button (click)="create()">Create</button>
@@ -26,6 +32,32 @@
       <span>
         {{ campaign.name }}
       </span>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="master">
+    <mat-header-cell *matHeaderCellDef>
+      <span>Master</span>
+    </mat-header-cell>
+
+    <mat-cell *matCellDef="let campaign; dataSource: campaigns$ | async">
+      <span>
+        {{ campaign.master?.displayName }}
+      </span>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="players">
+    <mat-header-cell *matHeaderCellDef>
+      <span>Players</span>
+    </mat-header-cell>
+
+    <mat-cell *matCellDef="let campaign; dataSource: campaigns$ | async">
+      @for (player of campaign.players; track player) {
+        <span>
+          {{ player.user.displayName }} ({{ player.character.name }} - {{ player.character.class }})
+        </span>
+      }
     </mat-cell>
   </ng-container>
 

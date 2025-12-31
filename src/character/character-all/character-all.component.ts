@@ -70,7 +70,13 @@ export class CharacterAllComponent {
       toObservable(this.paginationService.meta.page).pipe(
         startWith(this.paginationService.meta.page())
       ),
-      this.formGroup.valueChanges.pipe(startWith(this.formGroup.value), debounceTime(500)),
+      this.formGroup.valueChanges.pipe(
+        startWith(this.formGroup.value),
+        debounceTime(500),
+        tap((): void => {
+          this.paginationService.meta.page.set(0);
+        })
+      ),
     ]).pipe(
       takeUntilDestroyed(this.destroyRef),
       switchMap(

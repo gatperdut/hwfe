@@ -70,7 +70,7 @@ export class UserCampaignsComponent {
 
   private refresh$ = new Subject<void>();
 
-  public columns: string[] = ['name'];
+  public columns: string[] = ['name', 'master', 'players'];
 
   public characterClasses = CharacterClasses;
 
@@ -79,6 +79,9 @@ export class UserCampaignsComponent {
       nonNullable: true,
       validators: [],
     }),
+    participantId: this.formBuilder.control(undefined as number | undefined, {
+      nonNullable: true,
+    }),
   });
 
   constructor() {
@@ -86,7 +89,13 @@ export class UserCampaignsComponent {
       toObservable(this.paginationService.meta.page).pipe(
         startWith(this.paginationService.meta.page())
       ),
-      this.formGroup.valueChanges.pipe(startWith(this.formGroup.value), debounceTime(500)),
+      this.formGroup.valueChanges.pipe(
+        startWith(this.formGroup.value),
+        debounceTime(500),
+        tap((): void => {
+          this.paginationService.meta.page.set(0);
+        })
+      ),
       this.refresh$.pipe(startWith(undefined)),
     ]).pipe(
       takeUntilDestroyed(this.destroyRef),
@@ -95,6 +104,8 @@ export class UserCampaignsComponent {
           this.userApiService.campaigns(this.authService.user()!.id, {
             ...this.paginationService.toPagination(),
             ...this.formGroup.value,
+            includeMaster: true,
+            includePlayers: true,
           })
       ),
       tap((response: Paginated<Campaign>): void => {
