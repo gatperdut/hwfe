@@ -1,0 +1,77 @@
+<form [formGroup]="formGroup">
+  <mat-form-field>
+    <mat-label>Search</mat-label>
+
+    <input matInput type="text" formControlName="term" />
+  </mat-form-field>
+
+  <hwfe-user-picker
+    [userIdFormControl]="formGroup.controls.participantId"
+    [withoutIds]="[authService.user()!.id]"
+  ></hwfe-user-picker>
+</form>
+
+<button type="button" mat-button (click)="create()">Create</button>
+
+<mat-paginator
+  [length]="paginationService.meta.total()"
+  [pageSize]="paginationService.meta.pageSize()"
+  [pageSizeOptions]="[]"
+  [pageIndex]="paginationService.meta.page()"
+  (page)="paginationService.meta.page.set($event.pageIndex)"
+/>
+
+<mat-table [dataSource]="(campaigns$ | async) ?? []">
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef>
+      <span>Name</span>
+    </mat-header-cell>
+
+    <mat-cell *matCellDef="let campaign; dataSource: campaigns$ | async">
+      <span>
+        {{ campaign.name }}
+      </span>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="master">
+    <mat-header-cell *matHeaderCellDef>
+      <span>Master</span>
+    </mat-header-cell>
+
+    <mat-cell *matCellDef="let campaign; dataSource: campaigns$ | async">
+      <span>
+        {{ campaign.master?.displayName }}
+      </span>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="players">
+    <mat-header-cell *matHeaderCellDef>
+      <span>Players</span>
+    </mat-header-cell>
+
+    <mat-cell *matCellDef="let campaign; dataSource: campaigns$ | async">
+      @for (player of campaign.players; track player) {
+        <span>
+          {{ player.user.displayName }} ({{ player.character.name }} - {{ player.character.class }})
+        </span>
+      }
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef>
+      <span>Actions</span>
+    </mat-header-cell>
+
+    <mat-cell *matCellDef="let campaign; dataSource: campaigns$ | async">
+      <button type="button" mat-flat-button (click)="toCampaign(campaign)">
+        <span>Go</span>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+  <mat-row *matRowDef="let campaign; columns: columns"></mat-row>
+</mat-table>

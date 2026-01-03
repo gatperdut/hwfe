@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, shareReplay } from 'rxjs';
-import { User } from '../user/types/user.type';
+import { User } from '../user-aux/types/user.type';
 import { SocketPayload } from './types/socket-payload.type';
 
 export type SocketUsersLifecyclePayload = SocketPayload & {

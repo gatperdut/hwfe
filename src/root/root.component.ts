@@ -9,9 +9,9 @@ import {
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule } from '@angular/router';
 import { finalize, tap } from 'rxjs';
+import { AuthNavService } from '../auth/services/auth-nav.service';
 import { AuthService } from '../auth/services/auth.service';
-import { NavService } from '../services/nav.service';
-import { User } from '../user/types/user.type';
+import { User } from '../user-aux/types/user.type';
 
 @Component({
   selector: 'hwfe-root',
@@ -22,7 +22,7 @@ import { User } from '../user/types/user.type';
 })
 export class RootComponent implements OnInit {
   private authService = inject(AuthService);
-  private navService = inject(NavService);
+  private authNavService = inject(AuthNavService);
 
   public loading: WritableSignal<boolean> = signal<boolean>(true);
 
@@ -33,13 +33,13 @@ export class RootComponent implements OnInit {
         tap({
           next: (user: User | null): void => {
             if (!user) {
-              this.navService.toAuthLogin();
+              this.authNavService.toLogin();
 
               return;
             }
           },
           error: (): void => {
-            this.navService.toAuthLogin();
+            this.authNavService.toLogin();
           },
         }),
         finalize((): void => {

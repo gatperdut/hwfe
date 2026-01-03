@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { tap } from 'rxjs';
-import { NavService } from '../../services/nav.service';
+import { DashboardNavService } from '../../dashboard/services/dashboard-nav.service';
 import { TypedForm } from '../../types/typed-form.type';
 import { emailValidator } from '../register/validators/email.validator';
 import { AuthService } from '../services/auth.service';
@@ -29,7 +29,7 @@ import { UserLoginDto } from './types/user-login.dto';
 export class AuthLoginComponent {
   private formBuilder = inject(FormBuilder);
   private authService = inject(AuthService);
-  private navService = inject(NavService);
+  private dashboardNavService = inject(DashboardNavService);
 
   public formGroup: FormGroup<TypedForm<UserLoginDto>> = this.formBuilder.group({
     email: this.formBuilder.control('', {
@@ -50,7 +50,7 @@ export class AuthLoginComponent {
       .pipe(
         tap({
           next: (): void => {
-            this.navService.toDashboardUsers();
+            this.dashboardNavService.toUsers();
           },
         })
       )

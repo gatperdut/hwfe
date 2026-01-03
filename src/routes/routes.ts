@@ -2,12 +2,14 @@ import { Routes } from '@angular/router';
 import { AuthLoginComponent } from '../auth/login/auth-login.component';
 import { AuthRegisterComponent } from '../auth/register/auth-register.component';
 import { AuthenticatedComponent } from '../authenticated/authenticated.component';
-import { CampaignAllComponent } from '../campaign/campaign-all/campaign-all.component';
-import { UserCampaignsComponent } from '../campaign/user-campaigns/user-campaigns.component';
-import { CharacterAllComponent } from '../character/character-all/character-all.component';
+import { CampaignManageComponent } from '../campaign/campaign-manage/campaign-manage.component';
+import { CampaignComponent } from '../campaign/campaign.component';
+import { CampaignAllComponent } from '../dashboard/campaign-all/campaign-all.component';
+import { CharacterAllComponent } from '../dashboard/character-all/character-all.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
-import { UserAllComponent } from '../user/user-all/user-all.component';
-import { UserCharactersComponent } from '../user/user-characters/user-characters.component';
+import { UserAllComponent } from '../dashboard/user-all/user-all.component';
+import { UserCampaignsComponent } from '../dashboard/user-campaigns/user-campaigns.component';
+import { UserCharactersComponent } from '../dashboard/user-characters/user-characters.component';
 
 export const routes: Routes = [
   {
@@ -50,12 +52,27 @@ export const routes: Routes = [
             component: CampaignAllComponent,
           },
           {
-            path: 'user-characters',
+            path: 'characters',
             component: UserCharactersComponent,
           },
           {
-            path: 'user-campaigns',
+            path: 'campaigns',
             component: UserCampaignsComponent,
+          },
+        ],
+      },
+      {
+        path: 'campaign/:id',
+        component: CampaignComponent,
+        children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'manage',
+          },
+          {
+            path: 'manage',
+            component: CampaignManageComponent,
           },
         ],
       },

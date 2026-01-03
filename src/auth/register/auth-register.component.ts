@@ -15,9 +15,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { finalize, map, Observable, of, switchMap, tap, timer } from 'rxjs';
-import { NavService } from '../../services/nav.service';
+import { DashboardNavService } from '../../dashboard/services/dashboard-nav.service';
 import { TypedForm } from '../../types/typed-form.type';
-import { UserApiService } from '../../user/services/user-api.service';
+import { UserApiService } from '../../user-aux/services/user-api.service';
 import { AuthService } from '../services/auth.service';
 import { UserRegisterDto } from './types/user-register.dto';
 import { emailValidator } from './validators/email.validator';
@@ -40,7 +40,7 @@ import { passwordMatchValidator } from './validators/password-match.validator';
 export class AuthRegisterComponent {
   private formBuilder = inject(FormBuilder);
   private authService = inject(AuthService);
-  private navService = inject(NavService);
+  private dashboardNavService = inject(DashboardNavService);
   private userApiService = inject(UserApiService);
 
   public formGroup: FormGroup<TypedForm<UserRegisterDto>> = this.formBuilder.group(
@@ -136,7 +136,7 @@ export class AuthRegisterComponent {
       .register(this.formGroup.getRawValue())
       .pipe(
         tap((): void => {
-          this.navService.toDashboardUsers();
+          this.dashboardNavService.toUsers();
         })
       )
       .subscribe();

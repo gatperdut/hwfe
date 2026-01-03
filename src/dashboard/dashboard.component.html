@@ -1,9 +1,5 @@
 <h1>Dashboard</h1>
 
-<button type="button" mat-flat-button (click)="logout()">Logout</button>
-
-{{ authService.user() | json }}
-
 <nav mat-tab-nav-bar [tabPanel]="tabPanel">
   <a
     mat-tab-link
@@ -41,7 +37,7 @@
 
   <a
     mat-tab-link
-    [routerLink]="['user-campaigns']"
+    [routerLink]="['campaigns']"
     routerLinkActive
     #rlaUserCampaigns="routerLinkActive"
     [active]="rlaUserCampaigns.isActive"
@@ -51,7 +47,7 @@
 
   <a
     mat-tab-link
-    [routerLink]="['user-characters']"
+    [routerLink]="['characters']"
     routerLinkActive
     #rlaUserCharacters="routerLinkActive"
     [active]="rlaUserCharacters.isActive"
