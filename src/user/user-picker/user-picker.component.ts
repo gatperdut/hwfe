@@ -8,26 +8,17 @@ import {
   InputSignal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-import {
-  combineLatest,
-  debounceTime,
-  map,
-  Observable,
-  shareReplay,
-  startWith,
-  switchMap,
-} from 'rxjs';
+import { debounceTime, map, Observable, shareReplay, startWith, switchMap } from 'rxjs';
 import { Paginated } from '../../types/paginated.type';
-import { TypedForm } from '../../types/typed-form.type';
+import { UserAllDto } from '../dto/user-all.dto';
 import { UserApiService } from '../services/user-api.service';
 import { User } from '../types/user.type';
-import { UserPickerDto } from './dto/user-picker.dto';
 
 @Component({
   selector: 'hwfe-user-picker',
@@ -49,39 +40,40 @@ export class UserPickerComponent {
   private formBuilder = inject(FormBuilder);
   private destroyRef: DestroyRef = inject(DestroyRef);
 
+  public userIdFormControl: InputSignal<FormControl<number | undefined>> =
+    input.required<FormControl<number | undefined>>();
+
   public withoutIds: InputSignal<number[] | undefined> = input<number[] | undefined>();
 
   public users$: Observable<User[]>;
 
-  public formGroup: FormGroup<TypedForm<UserPickerDto>> = this.formBuilder.group({
-    term: this.formBuilder.control('', {
-      nonNullable: true,
-      validators: [],
-    }),
+  public termControl: FormControl<UserAllDto['term']> = this.formBuilder.control('', {
+    nonNullable: true,
+    validators: [],
   });
 
   constructor() {
-    this.users$ = combineLatest([
-      this.formGroup.valueChanges.pipe(startWith(this.formGroup.value), debounceTime(500)),
-    ]).pipe(
-      takeUntilDestroyed(this.destroyRef),
-      switchMap(
-        (): Observable<Paginated<User>> =>
-          this.userApiService.all({
-            ...{ page: 0, pageSize: 15 },
-            ...{ 'withoutIds[]': this.withoutIds() },
-            ...this.formGroup.value,
-          })
-      ),
-      map((response: Paginated<User>): User[] => {
-        return response.items;
-      }),
-      shareReplay()
-    );
+    this.users$ = this.termControl.valueChanges
+      .pipe(startWith(this.termControl.value), debounceTime(500))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        switchMap(
+          (): Observable<Paginated<User>> =>
+            this.userApiService.all({
+              ...{ page: 0, pageSize: 15 },
+              ...{ 'withoutIds[]': this.withoutIds() },
+              ...{ term: this.termControl.value },
+            })
+        ),
+        map((response: Paginated<User>): User[] => {
+          return response.items;
+        }),
+        shareReplay()
+      );
   }
 
   public selectionChanged(user: User | null): void {
-    console.log(user);
+    this.userIdFormControl().setValue(user?.id);
   }
 
   public selectionCleared(userSelect: MatSelect): void {

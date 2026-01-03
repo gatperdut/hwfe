@@ -5,14 +5,11 @@
     <input matInput type="text" formControlName="term" />
   </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Participant</mat-label>
-
-    <input matInput type="number" formControlName="participantId" />
-  </mat-form-field>
+  <hwfe-user-picker
+    [userIdFormControl]="formGroup.controls.participantId"
+    [withoutIds]="[authService.user()!.id]"
+  ></hwfe-user-picker>
 </form>
-
-<hwfe-user-picker [withoutIds]="[authService.user()!.id]"></hwfe-user-picker>
 
 <button type="button" mat-button (click)="create()">Create</button>
 

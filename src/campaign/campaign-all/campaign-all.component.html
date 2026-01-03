@@ -5,14 +5,8 @@
     <input matInput type="text" formControlName="term" />
   </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Participant</mat-label>
-
-    <input matInput type="number" formControlName="participantId" />
-  </mat-form-field>
+  <hwfe-user-picker [userIdFormControl]="formGroup.controls.participantId"></hwfe-user-picker>
 </form>
-
-<hwfe-user-picker></hwfe-user-picker>
 
 <mat-paginator
   [length]="paginationService.meta.total()"

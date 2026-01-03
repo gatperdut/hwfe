@@ -22,9 +22,9 @@ export class CampaignApiService {
     });
   }
 
-  public create(userId: number, params: CampaignCreateDto): Observable<Campaign> {
+  public create(masterId: number, params: CampaignCreateDto): Observable<Campaign> {
     return this.httpClient.post<Campaign>(`${environment.apiUrl}/campaigns`, {
-      userId: userId,
+      masterId: masterId,
       ...params,
     });
   }
