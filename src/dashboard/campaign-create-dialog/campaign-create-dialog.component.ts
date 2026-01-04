@@ -12,8 +12,8 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { CampaignCreateDto } from '../../campaign-aux/dto/campaign-create.dto';
 import { TypedForm } from '../../types/typed-form.type';
-import { CampaignCreateDto } from './dto/campaign-create.dto';
 
 export type CampaignCreateDialogData = {
   campaign: CampaignCreateDto;

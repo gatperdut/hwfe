@@ -62,7 +62,7 @@ export const routes: Routes = [
         ],
       },
       {
-        path: 'campaign/:id',
+        path: 'campaign/:campaignId',
         component: CampaignComponent,
         children: [
           {

@@ -1,1 +1,10 @@
-MANAGE
+<hwfe-user-picker
+  [withoutIds]="withoutIds()"
+  [userIdFormControl]="userIdFormControl"
+></hwfe-user-picker>
+
+<ul>
+  @for (option of campaignCurrentService.campaign()!.players; track option.userId) {
+    <li>{{ option.user.displayName }}</li>
+  }
+</ul>

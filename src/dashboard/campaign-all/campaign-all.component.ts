@@ -16,6 +16,7 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
+import { CampaignAllDto } from '../../campaign-aux/dto/campaign-all.dto';
 import { CampaignApiService } from '../../campaign-aux/services/campaign-api.service';
 import { Campaign } from '../../campaign-aux/types/campaign.type';
 import { PaginationService } from '../../services/pagination.service';
@@ -23,7 +24,6 @@ import { Paginated } from '../../types/paginated.type';
 import { TypedForm } from '../../types/typed-form.type';
 import { UserPickerComponent } from '../../user-aux/user-picker/user-picker.component';
 import { TypeSafeMatCellDefDirective } from '../../utils/typesafe-mat-cell-def.directive';
-import { CampaignAllDto } from './dto/campaign-all.dto';
 
 @Component({
   selector: 'hwfe-campaign-all',

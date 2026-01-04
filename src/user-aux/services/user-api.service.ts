@@ -33,6 +33,10 @@ export class UserApiService {
     return this.httpClient.get<User>(`${environment.apiUrl}/users/me`);
   }
 
+  public get(id: number): Observable<User> {
+    return this.httpClient.get<User>(`${environment.apiUrl}/users/${id}`);
+  }
+
   public availabilityEmail(params: UserAvailabilityEmailDto): Observable<boolean> {
     return this.httpClient
       .get<UserAvailabilityResponseDto>(`${environment.apiUrl}/users/availability-email`, {
